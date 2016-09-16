@@ -2,7 +2,6 @@
 
 ## Planning
 
-   CLASS/Attribute | GETTER | SETTER | MUTATOR(s) |
 -----------------------------------------------------
 *CLASS: Movie*
 * MovieID [Getter]
