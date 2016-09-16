@@ -60,8 +60,8 @@
     * [ ] Display Playlists
 * [ ] *Save*
     * [ ] Write to output
-    * [ ] Close files
 * [ ] *Exit*
+    * [ ] Warn of discarding unsaved changes
 
 
 ## METHODS:
