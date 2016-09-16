@@ -33,7 +33,7 @@
   * e.g.
   * ----------------------------------------------
   * #. MOVIE TITLE WITH MORE TEXT FOR LONG MOVIES
-  *      DURATION:  %%% mins GENRE: %%%%%%%%%%
+  *      DURATION:  %%% hours GENRE: %%%%%%%%%%
   *      CLASSIFICATION: %%%%% RATING: %%%
   * ----------------------------------------------
 * When reading in movies, keep track of *largest ID num* for when adding
