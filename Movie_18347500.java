@@ -28,7 +28,7 @@ public class Movie_18347500 {
     // DONE: [10] Movie Getters
 
     // ## GETTERS ##
-    // TIP: Return values from object. Check constructors for variable specifics
+    // TIP: Returns values from object. Check constructors for variable specifics
 
     // MovieID Getter
     public int getMovieID() {
