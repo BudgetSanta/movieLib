@@ -2,7 +2,6 @@
 
 ## Planning
 
------------------------------------------------------
 *CLASS: Movie*
 * MovieID [Getter]
 * Title [Getter]
