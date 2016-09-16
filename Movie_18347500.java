@@ -84,7 +84,18 @@ public class Movie_18347500 {
       return rating;
     }
 
-    // TODO: [12] Movie Setters
+    // DONE: [12] Movie Setters (only Genre and Rating)
 
+    // Movie Genre Setter
+    // Expects input to be validated against list of approved genres
+    public void setMovieGenre(String newGenre) {
+      genre = newGenre;
+    }
+
+    // Movie Rating Setter
+    // Expects input to be validatesd to approriate rating
+    public void setMovieRating(float newRating) {
+      rating = newRating;
+    }
 
 }
