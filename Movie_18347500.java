@@ -25,7 +25,56 @@ public class Movie_18347500 {
       rating = movieRating;
     }
 
-    // TODO1: Movie Getters
-    // TODO2: Movie Setters
+    // DONE: [10] Movie Getters
+
+    // ## GETTERS ##
+    // TIP: Return values from object. Check constructors for variable specifics
+
+    // MovieID Getter
+    public int getMovieID() {
+      return movieID;
+    }
+
+    // Movie Title Getter
+    public String getMovieName() {
+      return title;
+    }
+
+    // Movie Director Getter
+    public String getMovieDirector() {
+      return director;
+    }
+
+    // Movie Writer Getter
+    public String getMovieWriter() {
+      return writer;
+    }
+
+    // Movie Duration Getter
+    public float getMovieDuration() {
+      return duration;
+    }
+
+    // Movie Genre Getter
+    public String getMovieGenre() {
+      return genre;
+    }
+
+    // Movie Classification Getter
+    public String getMovieClassification() {
+      return classification;
+    }
+
+    // Movie Release Date Getter
+    public String getMovieRelease() {
+      return releaseDate;
+    }
+
+    // Movie Rating Getter
+    public float getMovieRating() {
+      return rating;
+    }
+
+    // TODO: [12] Movie Setters
 
 }
