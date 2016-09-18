@@ -8,7 +8,7 @@ In Progress Tasks (Currently working on)
 Completed Taks
   //D0NE: [[OrderNum][SubOrderNum]] Task Details [Completion Notes]
 */
-
+import java.io.*;
 import java.util.Scanner;
 
 public class LibraryManager_18347500 {
@@ -16,16 +16,16 @@ public class LibraryManager_18347500 {
   // Global Keyboard Instance
   public static Scanner kb = new Scanner(System.in);
 
-  public static void main(String[] args) {
+  public static void main(String[] args) throws IOException{
 
     rootMenu();
 
     kb.close();
   }
 
-  static void rootMenu() {
+  static void rootMenu() throws IOException{
 
-    // TODO: [20] Get basic Menu navigation working
+    // DONE: [20] Get basic Menu navigation working
     // Menu Loop Flags
     Boolean inRootMenu = true;              // Root Menu Loop Flag
     Boolean inMoviesMenu = false;           // Movie Menu Loop Flag
@@ -85,7 +85,7 @@ public class LibraryManager_18347500 {
   }
 
   // moviesMenu is the sub menu of ROOT
-  static Boolean moviesMenu(Boolean inMoviesMenu, Boolean inSortSubMenu) {
+  static Boolean moviesMenu(Boolean inMoviesMenu, Boolean inSortSubMenu) throws IOException{
 
     // Print menu options and take input
     printMoviesMenuOptions();
@@ -140,7 +140,7 @@ public class LibraryManager_18347500 {
   }
 
   // playlistsMenu is a sub menu of ROOT
-  static Boolean playlistsMenu(Boolean inPlaylistsMenu) {
+  static Boolean playlistsMenu(Boolean inPlaylistsMenu) throws IOException{
 
     // Print out menu options and takes input
     printPlaylistsMenuOptions();
@@ -182,7 +182,7 @@ public class LibraryManager_18347500 {
   }
 
   // sortSubMenu is a sub menu of Movies
-  static Boolean sortSubMenu(Boolean inSortSubMenu) {
+  static Boolean sortSubMenu(Boolean inSortSubMenu) throws IOException{
 
     // print menu options and take input
     printSortMenuOptions();
@@ -249,11 +249,21 @@ public class LibraryManager_18347500 {
     return output;
   }
 
-  // Combined prompt and Int input return
-  static int getIntIn(String prompt) {
-    System.out.print(prompt);
-    int output = kb.nextInt();    //TODO [40] Validate input with integerValidation snippet
-    return output;
+  // Combined prompt and VALIDATED Int input return
+  static Integer getIntIn(String prompt) throws IOException{
+    //DONE: [30] Get Validated Intger in method
+
+    // Takes string input to validate as Int
+    String outStr = "";
+    // Keeps asking for input while not a valid Integer
+    while (!IntegerValidation.isInt(outStr)) {
+      outStr = getStrIn(prompt);
+      // Only if the loop is going to repeat again does it show an error
+      if (!IntegerValidation.isInt(outStr)) {
+        System.out.println("ERROR: Not a Number. Please enter another choice.");
+      }
+    }
+    return Integer.parseInt(outStr);
   }
 
   // Used for normal Display and Sorted display
@@ -314,4 +324,6 @@ public class LibraryManager_18347500 {
     System.out.println("- 3. Go Back");
   }
 
+  // READ IN LINE ALL PURPOSE
+  //TODO: [40] Read in line from any file
 }
