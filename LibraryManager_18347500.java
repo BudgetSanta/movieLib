@@ -10,6 +10,7 @@ Completed Taks
 */
 import java.io.*;
 import java.util.Scanner;
+import java.util.ArrayList;
 
 public class LibraryManager_18347500 {
 
@@ -18,12 +19,15 @@ public class LibraryManager_18347500 {
 
   public static void main(String[] args) throws IOException{
 
-    rootMenu();
+    ArrayList<Movie_18347500> movieLibrary = initialiseMovieArrayList("movieLibrary.txt");        // Initialises Movie Library to Array List
+    //TODO: [42] Get ArrayList for Playlists working because playlists.txt doesn't have to exist
+
+    rootMenu(movieLibrary);
 
     kb.close();
   }
 
-  static void rootMenu() throws IOException{
+  static void rootMenu(ArrayList<Movie_18347500> movieLibrary) throws IOException{
 
     // DONE: [20] Get basic Menu navigation working
     // Menu Loop Flags
@@ -49,7 +53,7 @@ public class LibraryManager_18347500 {
           // Loop through movies menu till false flag
           inMoviesMenu = true;
           do {
-            inMoviesMenu = moviesMenu(inMoviesMenu, inSortSubMenu);
+            inMoviesMenu = moviesMenu(inMoviesMenu, inSortSubMenu, movieLibrary);
           } while (inMoviesMenu);
           break;
 
@@ -85,7 +89,7 @@ public class LibraryManager_18347500 {
   }
 
   // moviesMenu is the sub menu of ROOT
-  static Boolean moviesMenu(Boolean inMoviesMenu, Boolean inSortSubMenu) throws IOException{
+  static Boolean moviesMenu(Boolean inMoviesMenu, Boolean inSortSubMenu, ArrayList<Movie_18347500> movieLibrary) throws IOException{
 
     // Print menu options and take input
     printMoviesMenuOptions();
@@ -96,7 +100,7 @@ public class LibraryManager_18347500 {
       // DISPLAY
       case 1:
         // Display Movies in ID order
-        System.out.println("IN DISPLAY OPTION");
+        displayAllMovies(movieLibrary);
         break;
 
       // SORT BY MENU
@@ -267,8 +271,15 @@ public class LibraryManager_18347500 {
   }
 
   // Used for normal Display and Sorted display
-  static void displayAllMovies() {
-    //TODO: [50] Display input array of Movie objects
+  static void displayAllMovies(ArrayList<Movie_18347500> movieLibrary) {
+    //TODO: [50] Display input array list of Movie objects
+    for (Movie_18347500 movie : movieLibrary) {
+      System.out.println(movie.getMovieID() + ". " + movie.getMovieName() + " {" + movie.getMovieRating() + "/5} [Released: " + movie.getMovieRelease() + "]");
+      System.out.println("\tDURATION: " + movie.getMovieDuration() + " hours\t\tGENRE: " + movie.getMovieGenre());
+      System.out.println("\tCLASSIFICATION: " + movie.getMovieClassification() + "\t\tDIRECTOR: " + movie.getMovieDirector());
+      System.out.println("\tWRITER: " + movie.getMovieWriter());
+      System.out.println("");
+    }
   }
 
   static void sortBy() {
@@ -298,7 +309,7 @@ public class LibraryManager_18347500 {
     System.out.println("");
     System.out.println("## MOVIES MENU ##");
     System.out.println("- 1. Display Movies");
-    System.out.println("- 2. Sort & Display Movies");
+    System.out.println("- 2. Sort Movies");
     System.out.println("- 3. Add/Change Movie Rating");
     System.out.println("- 4. Change Movie Genre");
     System.out.println("- 5. Add Movie");
@@ -325,5 +336,54 @@ public class LibraryManager_18347500 {
   }
 
   // READ IN LINE ALL PURPOSE
-  //TODO: [40] Read in line from any file
+  /*
+  * Expected, File created outside of method
+  *           Scanner created outside when file read in needed
+  *           readInLine used in a loop to retrieve lines
+  *           # This way it can be used for both playlist and movie files
+  */
+  static String[] readInLine(Scanner inScanner) {
+    //TODO: [40] Read in line from any file
+    // All input is seperated by a ',' in files
+    String iterLineText = inScanner.nextLine();
+    String[] parts = iterLineText.split(",");
+    return parts;
+  }
+
+  // Creates a file object based of default name
+  static File createFileInst(String fileName) {
+    //DONE: [41] Create File Method
+    File inFile = new File(fileName);           // Existing filename e.g. Book.txt or directory e.g. Texts/Book.txt
+    // Requests new file name if not already
+    while (!inFile.exists()) {
+      System.out.println("ERROR: '" + fileName + "' not found!");
+      System.out.print("Enter file location: ./");
+      inFile = new File(kb.next());
+    }
+
+    return inFile;
+  }
+
+  static ArrayList<Movie_18347500> initialiseMovieArrayList(String fileName) throws IOException{
+    ArrayList<Movie_18347500> outputList = new ArrayList<Movie_18347500>();
+
+    File userInputFile = createFileInst(fileName);              // Create File Instance based off user input
+    Scanner fileScanner = new Scanner(userInputFile);           // Creates scanner instance ased off file instance
+
+    while (fileScanner.hasNext()) {
+      String[] lineSplit = readInLine(fileScanner);                                 // Get Line split
+      Boolean hasRating = true;                                                     // hasRating uses length of array to decide if movie has rating
+      if (lineSplit.length != 9) {
+        hasRating = false;                                                          // If false, constructor leaves rating as empty
+      }
+      Movie_18347500 tempMovieObj = new Movie_18347500(lineSplit, hasRating);       // Doesn't have a rating
+
+      outputList.add(tempMovieObj);                                                 // Add object to list
+    }
+
+    fileScanner.close();
+    return outputList;
+
+  }
+
 }
