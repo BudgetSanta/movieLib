@@ -275,9 +275,9 @@ public class LibraryManager_18347500 {
     //TODO: [50] Display input array list of Movie objects
     for (Movie_18347500 movie : movieLibrary) {
       System.out.println(movie.getMovieID() + ". " + movie.getMovieName() + " {" + movie.getMovieRating() + "/5} [Released: " + movie.getMovieRelease() + "]");
-      System.out.println("\tDURATION: " + movie.getMovieDuration() + " hours\t\tGENRE: " + movie.getMovieGenre());
+      System.out.println("\tDURATION: " + movie.getMovieDuration() + " hours\t\tWRITER: " + movie.getMovieWriter());
       System.out.println("\tCLASSIFICATION: " + movie.getMovieClassification() + "\t\tDIRECTOR: " + movie.getMovieDirector());
-      System.out.println("\tWRITER: " + movie.getMovieWriter());
+      System.out.println("\tGENRE: " + movie.getMovieGenre());
       System.out.println("");
     }
   }
