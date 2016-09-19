@@ -22,7 +22,7 @@ public class LibraryManager_18347500 {
 
   public static void main(String[] args) throws IOException{
 
-    List<Movie_18347500> movieLibrary = initialiseMovieList("movieLibrary.txt");        // Initialises Movie Library to Array List
+    List<Movie_18347500> movieLibrary = initialiseMovieList();        // Initialises Movie Library to Array List
     //TODO: [42] Get ArrayList for Playlists working because playlists.txt doesn't have to exist
 
     rootMenu(movieLibrary);
@@ -200,18 +200,13 @@ public class LibraryManager_18347500 {
       // TITLE
       case 1:
         // Display movies by title
-        List<Movie_18347500> alphaSorted = movieLibrary;                  // Creates a List to manipulate
-        Collections.sort(alphaSorted, Movie_18347500.COMPARE_BY_NAME);    // Sorts based on name.
-        displayAllMovies(alphaSorted);                                    // Displays the Movies based on order or sort
+        displayAllMovies(sortByTitle(movieLibrary));                            // Displays the Movies based in order of title sort
         break;
 
       // GENRE
       case 2:
         // Display movies by genre
-        List<Movie_18347500> genreSorted = movieLibrary;
-        Collections.sort(genreSorted, Movie_18347500.COMPARE_BY_NAME);          // Sort sort by name first
-        Collections.sort(genreSorted, Movie_18347500.COMPARE_BY_GENRE);         // Sorts by genre second so that in a genre movies are alphabetical
-        displayAllMovies(genreSorted);
+        displayAllMovies(sortByGenre(movieLibrary));
         break;
 
       // EXIT
@@ -280,7 +275,7 @@ public class LibraryManager_18347500 {
 
   // Used for normal Display and Sorted display
   static void displayAllMovies(List<Movie_18347500> movieLibrary) {
-    //TODO: [50] Display input array list of Movie objects
+    //DONE: [50] Display input array list of Movie objects
     for (Movie_18347500 movie : movieLibrary) {
       System.out.println(movie.getMovieID() + ". " + movie.getMovieName() + " {" + movie.getMovieRating() + "/5} [Released: " + movie.getMovieRelease() + "]");
       System.out.println("\tDURATION: " + movie.getMovieDuration() + " hours\t\tWRITER: " + movie.getMovieWriter());
@@ -290,10 +285,23 @@ public class LibraryManager_18347500 {
     }
   }
 
-  static void sortBy() {
+  static List<Movie_18347500> sortByTitle(List<Movie_18347500> movieLibrary) {
 
-    //TODO: [60] Plan out Sorting method
+    //TODO: [60] Move in Sort codes
+    // Display movies by title
+    List<Movie_18347500> alphaSorted = movieLibrary;                  // Creates a List to manipulate
+    Collections.sort(alphaSorted, Movie_18347500.COMPARE_BY_NAME);    // Sorts based on name.
+    return alphaSorted;                                               // returns the Movies in order of sort
 
+  }
+
+  static List<Movie_18347500> sortByGenre(List<Movie_18347500> movieLibrary) {
+
+    //TODO: [61] Move in sort code
+    List<Movie_18347500> genreSorted = movieLibrary;
+    Collections.sort(genreSorted, Movie_18347500.COMPARE_BY_NAME);          // Sort sort by name first
+    Collections.sort(genreSorted, Movie_18347500.COMPARE_BY_GENRE);         // Sorts by genre second so that in a genre movies are alphabetical
+    return genreSorted;
   }
 
   static void searchFor() {
@@ -359,24 +367,31 @@ public class LibraryManager_18347500 {
   }
 
   // Creates a file object based of default name
-  static File createFileInst(String fileName) {
+  static File createFileInst(String fileName, Boolean doValidate) {
     //DONE: [41] Create File Method
     File inFile = new File(fileName);           // Existing filename e.g. Book.txt or directory e.g. Texts/Book.txt
     // Requests new file name if not already
-    while (!inFile.exists()) {
+    if (doValidate) {                           // Whether it will repeat until pre-existing file found
+      while (!inFile.exists()) {
+        System.out.println("ERROR: '" + fileName + "' not found!");
+        System.out.print("Enter file location: ./");
+        inFile = new File(kb.next());
+      }
+    }
+    else {                                      // Do not persist in finding file. create blank
       System.out.println("ERROR: '" + fileName + "' not found!");
-      System.out.print("Enter file location: ./");
-      inFile = new File(kb.next());
+      System.out.println("Blank file created. If you have a pre-existing Playlists file please restart the program after renaming it 'playlists.txt'.");
     }
 
     return inFile;
   }
 
-  static List<Movie_18347500> initialiseMovieList(String fileName) throws IOException{
+  // Method cread to output a list of lines from movieLibrary. Unique method because Movie and Playlist are different classes
+  static List<Movie_18347500> initialiseMovieList() throws IOException{
     List<Movie_18347500> outputList = new ArrayList<Movie_18347500>();
 
-    File userInputFile = createFileInst(fileName);              // Create File Instance based off user input
-    Scanner fileScanner = new Scanner(userInputFile);           // Creates scanner instance ased off file instance
+    File userInputFile = createFileInst("movieLibrary.txt", true);              // Create File Instance based off user input
+    Scanner fileScanner = new Scanner(userInputFile);                           // Creates scanner instance ased off file instance
 
     while (fileScanner.hasNext()) {
       String[] lineSplit = readInLine(fileScanner);                                 // Get Line split
@@ -393,5 +408,26 @@ public class LibraryManager_18347500 {
     return outputList;
 
   }
+
+  static List<Playlist_18347500> initialisePlaylistList() throws IOException{
+    List<Playlist_18347500> outputList = new ArrayList<Playlist_18347500>();        // OUTPUT list created
+    File userInputFile = createFileInst("playlists.txt", false);                    // File created. Dp not persist in finding pre-existing file
+    Scanner fileScanner = new Scanner(userInputFile);                               // File scanner created
+
+    // while (fileScanner.hasNext()) {
+    //   String[] lineSplit = readInLine(fileScanner);
+    //   //Playlist_18347500 tempPlaylistObj = new Playlist_18347500(
+    //     //int IDNUMBER
+    //     //String NAME
+    //     //int length
+    //     //float DURATION (//TODO: 43 Make a method to add up movie durations from a playlist)
+    //     //int[] MOVIESLIST
+    //   //);
+    // }
+
+    return outputList;
+  }
+
+
 
 }
