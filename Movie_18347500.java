@@ -44,7 +44,7 @@ public class Movie_18347500 {
       genre = inputList[5];
       classification = inputList[6];
       releaseDate = inputList[7];
-      rating = Float.parseFloat(inputList[9]);
+      rating = Float.parseFloat(inputList[8]);
 
     }
 
