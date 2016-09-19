@@ -34,7 +34,7 @@ public class Movie_18347500 {
       rating = movieRating;
     }
 
-    public Movie_18347500(String[] inputList) {
+    public Movie_18347500(String[] inputList, Boolean hasRating) {
 
       movieID = Integer.parseInt(inputList[0]);
       title = inputList[1];
@@ -44,7 +44,10 @@ public class Movie_18347500 {
       genre = inputList[5];
       classification = inputList[6];
       releaseDate = inputList[7];
-      rating = Float.parseFloat(inputList[8]);
+      if (hasRating) {
+        rating = Float.parseFloat(inputList[8]);
+      }
+
 
     }
 
