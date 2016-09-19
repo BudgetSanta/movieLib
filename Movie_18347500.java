@@ -34,6 +34,20 @@ public class Movie_18347500 {
       rating = movieRating;
     }
 
+    public Movie_18347500(String[] inputList) {
+
+      movieID = Integer.parseInt(inputList[0]);
+      title = inputList[1];
+      director = inputList[2];
+      writer = inputList[3];
+      duration = Integer.parseInt(inputList[4]);
+      genre = inputList[5];
+      classification = inputList[6];
+      releaseDate = inputList[7];
+      rating = Float.parseFloat(inputList[9]);
+
+    }
+
     // DONE: [10] Movie Getters
 
     // ## GETTERS ##
