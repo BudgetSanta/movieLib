@@ -41,11 +41,11 @@
 
 ## Taks to Complete:
 * [ ] *Movies*
-    * [ ] Display ALL [Title, Duration, Genre, Classification, Rating]
+    * [X] Display ALL [Title, Duration, Genre, Classification, Rating]
       * Refer to IDEAS for possible format.
-    * [ ] Sort by
-      * [ ] Title
-      * [ ] Genre
+    * [X] Sort by
+      * [X] Title
+      * [X] Genre
     * [ ] Add Rating
       * [ ] Search Feature [Simple]
       * [ ] Rating setter
