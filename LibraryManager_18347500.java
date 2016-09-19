@@ -11,6 +11,9 @@ Completed Taks
 import java.io.*;
 import java.util.Scanner;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Collection;
+import java.util.Collections;
 
 public class LibraryManager_18347500 {
 
@@ -19,7 +22,7 @@ public class LibraryManager_18347500 {
 
   public static void main(String[] args) throws IOException{
 
-    ArrayList<Movie_18347500> movieLibrary = initialiseMovieArrayList("movieLibrary.txt");        // Initialises Movie Library to Array List
+    List<Movie_18347500> movieLibrary = initialiseMovieList("movieLibrary.txt");        // Initialises Movie Library to Array List
     //TODO: [42] Get ArrayList for Playlists working because playlists.txt doesn't have to exist
 
     rootMenu(movieLibrary);
@@ -27,7 +30,7 @@ public class LibraryManager_18347500 {
     kb.close();
   }
 
-  static void rootMenu(ArrayList<Movie_18347500> movieLibrary) throws IOException{
+  static void rootMenu(List<Movie_18347500> movieLibrary) throws IOException{
 
     // DONE: [20] Get basic Menu navigation working
     // Menu Loop Flags
@@ -89,7 +92,7 @@ public class LibraryManager_18347500 {
   }
 
   // moviesMenu is the sub menu of ROOT
-  static Boolean moviesMenu(Boolean inMoviesMenu, Boolean inSortSubMenu, ArrayList<Movie_18347500> movieLibrary) throws IOException{
+  static Boolean moviesMenu(Boolean inMoviesMenu, Boolean inSortSubMenu, List<Movie_18347500> movieLibrary) throws IOException{
 
     // Print menu options and take input
     printMoviesMenuOptions();
@@ -108,7 +111,7 @@ public class LibraryManager_18347500 {
         // Loop through Sort by menu till false flag
         inSortSubMenu = true;
         do {
-          inSortSubMenu = sortSubMenu(inSortSubMenu);
+          inSortSubMenu = sortSubMenu(inSortSubMenu, movieLibrary);
         } while (inSortSubMenu);
         break;
 
@@ -186,7 +189,7 @@ public class LibraryManager_18347500 {
   }
 
   // sortSubMenu is a sub menu of Movies
-  static Boolean sortSubMenu(Boolean inSortSubMenu) throws IOException{
+  static Boolean sortSubMenu(Boolean inSortSubMenu, List<Movie_18347500> movieLibrary) throws IOException{
 
     // print menu options and take input
     printSortMenuOptions();
@@ -197,13 +200,18 @@ public class LibraryManager_18347500 {
       // TITLE
       case 1:
         // Display movies by title
-        System.out.println("IN SORT BY TITLE OPTION");
+        List<Movie_18347500> alphaSorted = movieLibrary;                  // Creates a List to manipulate
+        Collections.sort(alphaSorted, Movie_18347500.COMPARE_BY_NAME);    // Sorts based on name.
+        displayAllMovies(alphaSorted);                                    // Displays the Movies based on order or sort
         break;
 
       // GENRE
       case 2:
         // Display movies by genre
-        System.out.println("IN SORT BY GENRE OPTION");
+        List<Movie_18347500> genreSorted = movieLibrary;
+        Collections.sort(genreSorted, Movie_18347500.COMPARE_BY_NAME);          // Sort sort by name first
+        Collections.sort(genreSorted, Movie_18347500.COMPARE_BY_GENRE);         // Sorts by genre second so that in a genre movies are alphabetical
+        displayAllMovies(genreSorted);
         break;
 
       // EXIT
@@ -271,7 +279,7 @@ public class LibraryManager_18347500 {
   }
 
   // Used for normal Display and Sorted display
-  static void displayAllMovies(ArrayList<Movie_18347500> movieLibrary) {
+  static void displayAllMovies(List<Movie_18347500> movieLibrary) {
     //TODO: [50] Display input array list of Movie objects
     for (Movie_18347500 movie : movieLibrary) {
       System.out.println(movie.getMovieID() + ". " + movie.getMovieName() + " {" + movie.getMovieRating() + "/5} [Released: " + movie.getMovieRelease() + "]");
@@ -364,8 +372,8 @@ public class LibraryManager_18347500 {
     return inFile;
   }
 
-  static ArrayList<Movie_18347500> initialiseMovieArrayList(String fileName) throws IOException{
-    ArrayList<Movie_18347500> outputList = new ArrayList<Movie_18347500>();
+  static List<Movie_18347500> initialiseMovieList(String fileName) throws IOException{
+    List<Movie_18347500> outputList = new ArrayList<Movie_18347500>();
 
     File userInputFile = createFileInst(fileName);              // Create File Instance based off user input
     Scanner fileScanner = new Scanner(userInputFile);           // Creates scanner instance ased off file instance
