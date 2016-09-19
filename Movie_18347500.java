@@ -40,7 +40,7 @@ public class Movie_18347500 {
       title = inputList[1];
       director = inputList[2];
       writer = inputList[3];
-      duration = Integer.parseInt(inputList[4]);
+      duration = Float.parseFloat(inputList[4]);
       genre = inputList[5];
       classification = inputList[6];
       releaseDate = inputList[7];
