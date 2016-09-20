@@ -322,13 +322,6 @@ public class LibraryManager_18347500 {
     return genreSorted;
   }
 
-  //
-  static void searchFor() {
-
-    //TODO: [70] Plan out Searching method
-
-  }
-
   // ROOT MENU OPTIONS PRINT OUT
   static void printRootMenuOptions() {
     System.out.println("");
@@ -371,12 +364,6 @@ public class LibraryManager_18347500 {
   }
 
   // READ IN LINE ALL PURPOSE
-  /*
-  * Expected, File created outside of method
-  *           Scanner created outside when file read in needed
-  *           readInLine used in a loop to retrieve lines
-  *           # This way it can be used for both playlist and movie files
-  */
   static String[] readInLine(Scanner inScanner) {
     //DONE: [40] Read in line from any file
     // All input is seperated by a ',' in files
@@ -411,7 +398,7 @@ public class LibraryManager_18347500 {
     return inFile;
   }
 
-  // Method cread to output a list of lines from movieLibrary. Unique method because Movie and Playlist are different classes
+  // Method created to output a list of lines from movieLibrary. Unique method because Movie and Playlist are different classes
   static List<Movie_18347500> initialiseMovieList() throws IOException{
     List<Movie_18347500> outputList = new ArrayList<Movie_18347500>();
 
@@ -434,6 +421,7 @@ public class LibraryManager_18347500 {
 
   }
 
+  // Fills playlist List with contents of playlist.txt
   static List<Playlist_18347500> initialisePlaylistList(List<Movie_18347500> movieLibrary) throws IOException{
     List<Playlist_18347500> outputList = new ArrayList<Playlist_18347500>();        // OUTPUT list created
     File userInputFile = createFileInst("playlists.txt", false);                    // File created. Dp not persist in finding pre-existing file
@@ -462,6 +450,7 @@ public class LibraryManager_18347500 {
     return outputList;
   }
 
+  // Searches through movies to add up their durations
   static float sumMovieDurations(List<Movie_18347500> movieLibrary, List<Integer> moviesInPlaylist) {
     float totalDuration = 0;                        // Running count of movie durations
     for (int playlistMov : moviesInPlaylist) {
@@ -484,4 +473,10 @@ public class LibraryManager_18347500 {
     return outIntList;
   }
 
+  // Returns movie object if search matches name
+  static void searchFor() {
+
+    //TODO: [70] Plan out Searching method
+
+  }
 }
