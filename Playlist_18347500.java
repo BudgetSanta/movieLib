@@ -8,6 +8,8 @@ In Progress Tasks (Currently working on)
 Completed Taks
   //D0NE: [[OrderNum][SubOrderNum]] Task Details [Completion Notes]
 */
+import java.util.ArrayList;
+import java.util.List;
 
 public class Playlist_18347500 {
 
@@ -15,9 +17,9 @@ public class Playlist_18347500 {
   String name;                  // Playlist name
   int length;                   // Number of movies in playlist
   float duration;               // Total duration of all movies in playlist
-  int[] movies;                 // Array of movie IDs (No movies is one movieID '0')
+  List<Integer> movies;          // Array of movie IDs (No movies is one movieID '0')
 
-  public Playlist_18347500 (int idNum, String playlistName, int playlistLength, float playlistDuration, int[] movieArray) {
+  public Playlist_18347500 (int idNum, String playlistName, int playlistLength, float playlistDuration, List<Integer> movieArray) {
 
     playlistID = idNum;
     name = playlistName;
@@ -53,7 +55,7 @@ public class Playlist_18347500 {
   }
 
   // Playlist movie array Getter
-  public int[] getPlaylistMovies() {
+  public List<Integer> getPlaylistMovies() {
     return movies;
   }
 }

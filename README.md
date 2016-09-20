@@ -57,7 +57,7 @@
       * [ ] Add object to library array
     * [ ] Exit
 * [ ] *Playlists*
-    * [ ] Display Playlists
+    * [X] Display Playlists
 * [ ] *Save*
     * [ ] Write to output
 * [ ] *Exit*
