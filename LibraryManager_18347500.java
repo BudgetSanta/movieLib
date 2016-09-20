@@ -19,7 +19,6 @@ public class LibraryManager_18347500 {
 
   // Global Keyboard Instance
   public static Scanner kb = new Scanner(System.in);
-  public static Boolean globalDebug = true;
 
   public static void main(String[] args) throws IOException{
 
@@ -483,10 +482,6 @@ public class LibraryManager_18347500 {
       outIntList.add(Integer.parseInt(inStringArray[i]));
     }
     return outIntList;
-  }
-
-  static void printlnDebug(String message) {
-    if (globalDebug) {System.out.println(message);}
   }
 
 }
