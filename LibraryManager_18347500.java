@@ -10,6 +10,7 @@ Completed Taks
 */
 import java.io.*;
 import java.util.Scanner;
+import java.util.Objects;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Collection;
@@ -19,12 +20,18 @@ public class LibraryManager_18347500 {
 
   // Global Keyboard Instance
   public static Scanner kb = new Scanner(System.in);
+  public static List<Movie_18347500> movieLibrary = initialiseMovieList();                    // Initialises Movie Library to List
+  public static List<Playlist_18347500> playlists = initialisePlaylistList();                 // Initialises Playlists to List
 
   public static void main(String[] args) throws IOException{
 
+    //TODO: [80] Move methods to seperate files
+    //TODO: [81] Sort methods into categories
+    //TODO: [82] Reference web showing Class.Method() references
+
     System.out.println("\n ---- IMPORTING PROGRAM FILES ---- ");
-    List<Movie_18347500> movieLibrary = initialiseMovieList();                    // Initialises Movie Library to List
-    List<Playlist_18347500> playlists = initialisePlaylistList(movieLibrary);     // Initialises Playlists to List
+
+
     //DONE: [42] Get ArrayList for Playlists working because playlists.txt doesn't have to exist
 
     rootMenu(movieLibrary, playlists);
@@ -58,7 +65,7 @@ public class LibraryManager_18347500 {
           // Loop through movies menu till false flag
           inMoviesMenu = true;
           do {
-            inMoviesMenu = moviesMenu(inMoviesMenu, inSortSubMenu, movieLibrary);
+            inMoviesMenu = moviesMenu(inMoviesMenu, inSortSubMenu);
           } while (inMoviesMenu);
           break;
 
@@ -67,7 +74,7 @@ public class LibraryManager_18347500 {
           // Loop through playlists menu till false flag
           inPlaylistsMenu = true;
           do {
-            inPlaylistsMenu = playlistsMenu(inPlaylistsMenu, playlists, movieLibrary);
+            inPlaylistsMenu = playlistsMenu(inPlaylistsMenu);
           } while (inPlaylistsMenu);
           break;
 
@@ -94,7 +101,7 @@ public class LibraryManager_18347500 {
   }
 
   // moviesMenu is the sub menu of ROOT
-  static Boolean moviesMenu(Boolean inMoviesMenu, Boolean inSortSubMenu, List<Movie_18347500> movieLibrary) throws IOException{
+  static Boolean moviesMenu(Boolean inMoviesMenu, Boolean inSortSubMenu) throws IOException{
 
     // Print menu options and take input
     printMoviesMenuOptions();
@@ -113,7 +120,7 @@ public class LibraryManager_18347500 {
         // Loop through Sort by menu till false flag
         inSortSubMenu = true;
         do {
-          inSortSubMenu = sortSubMenu(inSortSubMenu, movieLibrary);
+          inSortSubMenu = sortSubMenu(inSortSubMenu);
         } while (inSortSubMenu);
         break;
 
@@ -149,7 +156,7 @@ public class LibraryManager_18347500 {
   }
 
   // playlistsMenu is a sub menu of ROOT
-  static Boolean playlistsMenu(Boolean inPlaylistsMenu, List<Playlist_18347500> playlists, List<Movie_18347500> movieLibrary) throws IOException{
+  static Boolean playlistsMenu(Boolean inPlaylistsMenu) throws IOException{
 
     // Print out menu options and takes input
     printPlaylistsMenuOptions();
@@ -160,7 +167,7 @@ public class LibraryManager_18347500 {
       // DISPLAY
       case 1:
         // Display Playlists
-        displayAllPlaylists(playlists, movieLibrary);
+        displayAllPlaylists(playlists);
         break;
 
       // CREATE
@@ -191,7 +198,7 @@ public class LibraryManager_18347500 {
   }
 
   // sortSubMenu is a sub menu of Movies
-  static Boolean sortSubMenu(Boolean inSortSubMenu, List<Movie_18347500> movieLibrary) throws IOException{
+  static Boolean sortSubMenu(Boolean inSortSubMenu) throws IOException{
 
     // print menu options and take input
     printSortMenuOptions();
@@ -202,13 +209,13 @@ public class LibraryManager_18347500 {
       // TITLE
       case 1:
         // Display movies by title
-        displayAllMovies(sortByTitle(movieLibrary));                            // Displays the Movies based in order of title sort
+        displayAllMovies(sortByTitle());                            // Displays the Movies based in order of title sort
         break;
 
       // GENRE
       case 2:
         // Display movies by genre
-        displayAllMovies(sortByGenre(movieLibrary));
+        displayAllMovies(sortByGenre());
         break;
 
       // EXIT
@@ -276,9 +283,9 @@ public class LibraryManager_18347500 {
   }
 
   // Used for normal Display and Sorted display
-  static void displayAllMovies(List<Movie_18347500> movieLibrary) {
+  static void displayAllMovies(List<Movie_18347500> inputList) {
     //DONE: [50] Display input array list of Movie objects
-    for (Movie_18347500 movie : movieLibrary) {
+    for (Movie_18347500 movie : inputList) {
       System.out.println(movie.getMovieID() + ". " + movie.getMovieName() + " {" + movie.getMovieRating() + "/5} [Released: " + movie.getMovieRelease() + "]");
       System.out.println("\tDURATION: " + movie.getMovieDuration() + " hours\t\tWRITER: " + movie.getMovieWriter());
       System.out.println("\tCLASSIFICATION: " + movie.getMovieClassification() + "\t\tDIRECTOR: " + movie.getMovieDirector());
@@ -287,9 +294,10 @@ public class LibraryManager_18347500 {
     }
   }
 
-  static void displayAllPlaylists(List<Playlist_18347500> playlists, List<Movie_18347500> movieLibrary) {
+  // Used for normal display of playlists
+  static void displayAllPlaylists(List<Playlist_18347500> inputList) {
 
-    for (Playlist_18347500 playlist : playlists) {
+    for (Playlist_18347500 playlist : inputList) {
       System.out.println("\n" + playlist.getPlaylistID() + ". " + playlist.getPlaylistName() + " ["+ playlist.getPlaylistLength() + " movies] {Total Runtime: " + playlist.getPlaylistDuration() + " hours}");
       for (int playlistMovieID : playlist.getPlaylistMovies()) {          // Loops though playlistMovie IDs
         for (Movie_18347500 libMovie : movieLibrary) {                    // Loops through movieLibrary movies
@@ -302,7 +310,7 @@ public class LibraryManager_18347500 {
   }
 
   // Sorts the movie library alphabetically
-  static List<Movie_18347500> sortByTitle(List<Movie_18347500> movieLibrary) {
+  static List<Movie_18347500> sortByTitle() {
 
     //DONE: [60] Move in Sort codes
     // Display movies by title
@@ -313,7 +321,7 @@ public class LibraryManager_18347500 {
   }
 
   // Sorts the movie library alphabetically within an alphabetical genre sort
-  static List<Movie_18347500> sortByGenre(List<Movie_18347500> movieLibrary) {
+  static List<Movie_18347500> sortByGenre() {
 
     //DONE: [61] Move in sort code
     List<Movie_18347500> genreSorted = movieLibrary;
@@ -399,11 +407,16 @@ public class LibraryManager_18347500 {
   }
 
   // Method created to output a list of lines from movieLibrary. Unique method because Movie and Playlist are different classes
-  static List<Movie_18347500> initialiseMovieList() throws IOException{
+  static List<Movie_18347500> initialiseMovieList() {
     List<Movie_18347500> outputList = new ArrayList<Movie_18347500>();
 
-    File userInputFile = createFileInst("movieLibrary.txt", true);              // Create File Instance based off user input
-    Scanner fileScanner = new Scanner(userInputFile);                           // Creates scanner instance ased off file instance
+    File userInputFile = createFileInst("movieLibrary.txt", true);                // Create File Instance based off user input
+    Scanner fileScanner = new Scanner(System.in);            //FIXME              // Creating keyboard input first allows try catch for FNF and also 'may not be initialised issue'
+    try {
+      fileScanner = new Scanner(userInputFile);                                   // Creates scanner instance based off file instance
+    } catch (Exception e) {
+      System.out.println("FileNotFoundException thrown.");
+    }
 
     while (fileScanner.hasNext()) {
       String[] lineSplit = readInLine(fileScanner);                                 // Get Line split
@@ -422,18 +435,24 @@ public class LibraryManager_18347500 {
   }
 
   // Fills playlist List with contents of playlist.txt
-  static List<Playlist_18347500> initialisePlaylistList(List<Movie_18347500> movieLibrary) throws IOException{
+  static List<Playlist_18347500> initialisePlaylistList() {
     List<Playlist_18347500> outputList = new ArrayList<Playlist_18347500>();        // OUTPUT list created
     File userInputFile = createFileInst("playlists.txt", false);                    // File created. Dp not persist in finding pre-existing file
-    Scanner fileScanner = new Scanner(userInputFile);                               // File scanner created
+
+    Scanner fileScanner = new Scanner(System.in);                                   // Creating keyboard input first allows try catch for FNF and also 'may not be initialised issue'
+    try {
+      fileScanner = new Scanner(userInputFile);                                     // Creates a scanner instance based off file instance
+    } catch (Exception e) {
+      System.out.println("FileNotFoundException thrown.");
+    }
 
     while (fileScanner.hasNext()) {
       String[] lineSplit = readInLine(fileScanner);                                             // Splits the line up by commas
       int playlistID = Integer.parseInt(lineSplit[0]);                                          // Playlist ID
       String playlistName = lineSplit[1];                                                       // Playlist Name
       int playlistLength = Integer.parseInt(lineSplit[2]);                                      // How many movies
-      List<Integer> moviesInPlaylist = getPlaylistMovIDs(lineSplit, playlistLength);  // Takes all movie int in a sublist
-      float totalDuration = sumMovieDurations(movieLibrary, moviesInPlaylist);                  // Created after moviesInPlaylist for obvious reason
+      List<Integer> moviesInPlaylist = getPlaylistMovIDs(lineSplit, playlistLength);            // Takes all movie int in a sublist
+      float totalDuration = sumMovieDurations(moviesInPlaylist);                  // Created after moviesInPlaylist for obvious reason
 
       Playlist_18347500 tempPlaylistObj = new Playlist_18347500(
         playlistID,                                                // int playlistID
@@ -451,7 +470,7 @@ public class LibraryManager_18347500 {
   }
 
   // Searches through movies to add up their durations
-  static float sumMovieDurations(List<Movie_18347500> movieLibrary, List<Integer> moviesInPlaylist) {
+  static float sumMovieDurations(List<Integer> moviesInPlaylist) {
     float totalDuration = 0;                        // Running count of movie durations
     for (int playlistMov : moviesInPlaylist) {
       for (Movie_18347500 mov : movieLibrary) {
@@ -473,10 +492,19 @@ public class LibraryManager_18347500 {
     return outIntList;
   }
 
-  // Returns movie object if search matches name
-  static void searchFor() {
+  // Returns movie index in library if search matches name. returns -1 if no match
+  static int searchFor(String searchKey) {
 
     //TODO: [70] Plan out Searching method
+    // Objects.equals(A,B); will give value equality boolean
+    int outputIndex = -1;
+    for (int i = 0; i < movieLibrary.size()-1; i++) {
+      if (Objects.equals(searchKey, movieLibrary.get(i).getMovieName())) {
+        return i;
+      }
+    }
 
+    System.out.println("No movies named " + searchKey + " were found. Please change your search term.");
+    return outputIndex;
   }
 }
