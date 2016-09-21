@@ -235,8 +235,39 @@ public class LibraryManager_18347500 {
 
   // SHORT DESC
   static void ratingSubMenu() {
-    System.out.println("IN RATING SUB MENU");
+    //comment
+    int movieIndex;
+    do {
+      movieIndex = searchConfirm();
+    } while (movieIndex != -1);
+
+    //TODO [90] RATING EDIT - take rating input and validate
+    //TODO [91] RATING EDIT - confirm (TITLE, prev Rating, new Rating)
+    //TODO [92] GENRE EDIT - copy and adjust for genre
+    //TODO [93] Comment your shit man. c'mon seriously its a mess
+  }
+
+  static Boolean ratingValidation() {
+    // Make sure ratings are floats whole or halfs 0.0-5.0 inclusive
+    Boolean output = false;
+    //inbetween
+    return output;
+  }
+
+  // SHORT DESC
+  static int searchConfirm() {
     // SEARCH THEN SET RATING
+    int movieIndex;
+    do {
+      movieIndex = searchFor(getStrIn("Please enter a movie title to edit: "));   // Returns movie index if exits
+    } while (movieIndex != -1);
+
+    String confirm = getStrIn("\n\tPress the enter key to confirm " + movieLibrary.get(movieIndex).getMovieName() + " as your edit choice. Type anything then enter to cancel.");
+    if (!(Objects.equals(confirm, ""))) {
+      movieIndex = -1;
+    }
+
+    return movieIndex;
   }
 
   // SHORT DESC
@@ -507,4 +538,6 @@ public class LibraryManager_18347500 {
     System.out.println("No movies named " + searchKey + " were found. Please change your search term.");
     return outputIndex;
   }
+
+
 }
