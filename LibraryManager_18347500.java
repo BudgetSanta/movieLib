@@ -234,12 +234,22 @@ public class LibraryManager_18347500 {
   }
 
   // SHORT DESC
-  static void ratingSubMenu() {
+  static void ratingSubMenu() throws IOException{
     //comment
     int movieIndex;
     do {
-      movieIndex = searchConfirm();
-    } while (movieIndex != -1);
+      movieIndex = findMovieIndex();
+    } while (movieIndex == -1);
+
+    System.out.println("This movies rating is " + movieLibrary.get(movieIndex).getMovieRating());
+
+    float rating;
+    do {
+      rating = getFloatIn("Please enter the new rating: ");
+    } while (!isValidRating(rating));
+
+    movieLibrary.get(movieIndex).setMovieRating(rating);
+    System.out.println("Movie {" + movieLibrary.get(movieIndex).getMovieName() + "} rating changed to " + movieLibrary.get(movieIndex).getMovieRating());
 
     //TODO [90] RATING EDIT - take rating input and validate
     //TODO [91] RATING EDIT - confirm (TITLE, prev Rating, new Rating)
@@ -254,18 +264,25 @@ public class LibraryManager_18347500 {
     return output;
   }
 
+  // Quick boolean, can be divided by 0.5 with no remainder and between 0-5
+  static Boolean isValidRating(float rating) {
+    if ( (0.0 <= rating && rating <= 5.0) && rating % 0.5 == 0) {    // Whole and half numbers can be divided by 0.5 with no remainder
+      return true;                                                   // Only whole and half number can be ratings
+    }
+    else {
+      System.out.println("\n # " + rating + " is not a valid rating.");
+      System.out.println("\tRATING MUST BE\n\t - Between 0 and 5\n\t - A whole or half number\n\t - e.g. 0,1.5 or 4.0");
+      return false;
+    }
+  }
+
   // SHORT DESC
-  static int searchConfirm() {
+  static int findMovieIndex() {
     // SEARCH THEN SET RATING
     int movieIndex;
     do {
       movieIndex = searchFor(getStrIn("Please enter a movie title to edit: "));   // Returns movie index if exits
-    } while (movieIndex != -1);
-
-    String confirm = getStrIn("\n\tPress the enter key to confirm " + movieLibrary.get(movieIndex).getMovieName() + " as your edit choice. Type anything then enter to cancel.");
-    if (!(Objects.equals(confirm, ""))) {
-      movieIndex = -1;
-    }
+    } while (movieIndex == -1);
 
     return movieIndex;
   }
@@ -292,7 +309,7 @@ public class LibraryManager_18347500 {
   // Combined prompt and String input return
   static String getStrIn(String prompt) {
     System.out.print(prompt);
-    String output = kb.next();
+    String output = kb.nextLine();
     return output;
   }
 
@@ -303,14 +320,29 @@ public class LibraryManager_18347500 {
     // Takes string input to validate as Int
     String outStr = "";
     // Keeps asking for input while not a valid Integer
-    while (!IntegerValidation.isInt(outStr)) {
+    while (!NumberValidation.isInt(outStr)) {
       outStr = getStrIn(prompt);
       // Only if the loop is going to repeat again does it show an error
-      if (!IntegerValidation.isInt(outStr)) {
-        System.out.println("ERROR: Not a Number. Please enter another choice.");
+      if (!NumberValidation.isInt(outStr)) {
+        System.out.println("ERROR: Not a valid integer. Please enter another choice.");
       }
     }
     return Integer.parseInt(outStr);
+  }
+
+  static Float getFloatIn(String prompt) throws IOException {
+
+    // Takes string input to validate as float
+    String outStr = "";
+    // keeps asking for input while not a valid float
+    while (!NumberValidation.isFloat(outStr)) {
+      outStr = getStrIn(prompt);
+      // only if the loop is going to repeat again does it show an error
+      if (!NumberValidation.isFloat(outStr)) {
+        System.out.println("ERROR: Not a valid float number. Please enter another choice.");
+      }
+    }
+    return Float.parseFloat(outStr);
   }
 
   // Used for normal Display and Sorted display
