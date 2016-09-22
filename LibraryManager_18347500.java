@@ -29,7 +29,7 @@ public class LibraryManager_18347500 {
     //TODO: [81] Sort methods into categories
     //TODO: [82] Reference web showing Class.Method() references
 
-    System.out.println("\n ---- IMPORTING PROGRAM FILES ---- ");
+    System.out.println("\n ---- IMPORTED PROGRAM FILES ---- ");
 
 
     //DONE: [42] Get ArrayList for Playlists working because playlists.txt doesn't have to exist
@@ -39,6 +39,7 @@ public class LibraryManager_18347500 {
     kb.close();
   }
 
+  // This is the menu that calls all sub menus and repeats with menuLoopFlags
   static void rootMenu(List<Movie_18347500> movieLibrary, List<Playlist_18347500> playlists) throws IOException{
 
     // DONE: [20] Get basic Menu navigation working
@@ -100,7 +101,7 @@ public class LibraryManager_18347500 {
 
   }
 
-  // moviesMenu is the sub menu of ROOT
+  // moviesMenu is a sub menu of ROOT for individual movies
   static Boolean moviesMenu(Boolean inMoviesMenu, Boolean inSortSubMenu) throws IOException{
 
     // Print menu options and take input
@@ -155,7 +156,7 @@ public class LibraryManager_18347500 {
 
   }
 
-  // playlistsMenu is a sub menu of ROOT
+  // playlistsMenu is a sub menu of ROOT for playlists of movies
   static Boolean playlistsMenu(Boolean inPlaylistsMenu) throws IOException{
 
     // Print out menu options and takes input
@@ -197,7 +198,7 @@ public class LibraryManager_18347500 {
     return inPlaylistsMenu;
   }
 
-  // sortSubMenu is a sub menu of Movies
+  // sortSubMenu is a sub menu of Movies for sorting movieLibrary
   static Boolean sortSubMenu(Boolean inSortSubMenu) throws IOException{
 
     // print menu options and take input
@@ -233,7 +234,7 @@ public class LibraryManager_18347500 {
     return inSortSubMenu;
   }
 
-  // SHORT DESC
+  // ratingSubMenu is a sub menu of Movies for changing the rating of a movie
   static void ratingSubMenu() throws IOException{
     //comment
     int movieIndex;
@@ -257,14 +258,7 @@ public class LibraryManager_18347500 {
     //TODO [93] Comment your shit man. c'mon seriously its a mess
   }
 
-  static Boolean ratingValidation() {
-    // Make sure ratings are floats whole or halfs 0.0-5.0 inclusive
-    Boolean output = false;
-    //inbetween
-    return output;
-  }
-
-  // Quick boolean, can be divided by 0.5 with no remainder and between 0-5
+  // isValidRating used in ratingSubMenu, contains the specifics of rating specifictions
   static Boolean isValidRating(float rating) {
     if ( (0.0 <= rating && rating <= 5.0) && rating % 0.5 == 0) {    // Whole and half numbers can be divided by 0.5 with no remainder
       return true;                                                   // Only whole and half number can be ratings
@@ -276,7 +270,7 @@ public class LibraryManager_18347500 {
     }
   }
 
-  // SHORT DESC
+  // Returns the movie's index in movieLibrary list
   static int findMovieIndex() {
     // SEARCH THEN SET RATING
     int movieIndex;
@@ -287,7 +281,7 @@ public class LibraryManager_18347500 {
     return movieIndex;
   }
 
-  // SHORT DESC
+  // genreSubMenu is a sub menu of Movies for changing the rating of a movie
   static void genreSubMenu() {
     // SEARCH THEN SET GENRE
     int movieIndex;
@@ -307,7 +301,7 @@ public class LibraryManager_18347500 {
     System.out.println("\n\t!! Movie {" + movieLibrary.get(movieIndex).getMovieName() + "} genre changed to " + movieLibrary.get(movieIndex).getMovieGenre());
   }
 
-  // Boolean return on whether it is a valid genre
+  // isValidGenre used in genreSubMenu, contains the specifics of rating specifictions
   static Boolean isValidGenre(String newGenre) {
     String[] genres = {"Action", "Adventure", "Comedy", "Crime", "Fantasy", "Family", "Romance", "Horror", "Drama", "Sci-fi", "Thriller"};
     for (String validGenre : genres) {
@@ -356,6 +350,7 @@ public class LibraryManager_18347500 {
     return Integer.parseInt(outStr);
   }
 
+  // Combined prompt and VALIDATED Float input return
   static Float getFloatIn(String prompt) throws IOException {
 
     // Takes string input to validate as float
@@ -371,7 +366,7 @@ public class LibraryManager_18347500 {
     return Float.parseFloat(outStr);
   }
 
-  // Used for normal Display and Sorted display
+  // displayAllMovies takes any sort of movieLibrary and displays it
   static void displayAllMovies(List<Movie_18347500> inputList) {
     //DONE: [50] Display input array list of Movie objects
     for (Movie_18347500 movie : inputList) {
@@ -383,7 +378,7 @@ public class LibraryManager_18347500 {
     }
   }
 
-  // Used for normal display of playlists
+  // displayAllPlaylists takes the playlist list and displays it
   static void displayAllPlaylists(List<Playlist_18347500> inputList) {
 
     for (Playlist_18347500 playlist : inputList) {
@@ -435,7 +430,7 @@ public class LibraryManager_18347500 {
     System.out.println("## MOVIES MENU ##");
     System.out.println("- 1. Display Movies");
     System.out.println("- 2. Sort Movies");
-    System.out.println("- 3. Add/Change Movie Rating");
+    System.out.println("- 3. Change Movie Rating");
     System.out.println("- 4. Change Movie Genre");
     System.out.println("- 5. Add Movie");
     System.out.println("- 6. Go Back");
@@ -460,7 +455,7 @@ public class LibraryManager_18347500 {
     System.out.println("- 3. Go Back");
   }
 
-  // PRINT OUT FOR AVAILABLE GENRES
+  // AVAILABLE GENRES PRINT OUT
   static void printGenres() {
     System.out.println("");
     System.out.println("Available Genres:");
@@ -470,8 +465,8 @@ public class LibraryManager_18347500 {
     System.out.println("\t- Sci-fi\t- Thriller");
   }
 
-  // READ IN LINE ALL PURPOSE
-  static String[] readInLine(Scanner inScanner) {
+  // All purpose read in next line and split by commas
+  static String[] readInLineSplit(Scanner inScanner) {
     //DONE: [40] Read in line from any file
     // All input is seperated by a ',' in files
     String iterLineText = inScanner.nextLine();
@@ -479,25 +474,25 @@ public class LibraryManager_18347500 {
     return parts;
   }
 
-  // Creates a file object based of default name
+  // Creates a file object based of given filename
   static File createFileInst(String fileName, Boolean doValidate) {
     //DONE: [41] Create File Method
     File inFile = new File(fileName);           // Existing filename e.g. Book.txt or directory e.g. Texts/Book.txt
     // Requests new file name if not already
     if (doValidate) {                           // Whether it will repeat until pre-existing file found
-      while (!inFile.exists()) {
+      while (!inFile.exists()) {                // FILENAME SEARCH PERSIST
         System.out.println("ERROR: '" + fileName + "' not found!");
         System.out.print("Enter file location: ./");
         inFile = new File(kb.next());
       }
       System.out.println(fileName + " successfully found and imported !");
     }
-    else {                                      // Do not persist in finding file. create blank
-      if (!inFile.exists()) {
+    else {
+      if (!inFile.exists()) {                   // FILENAME SEARCH NO-PERSIST. CREATE BLANK FILE FOR USE
         System.out.println("ERROR: '" + fileName + "' not found!");
         System.out.println("Blank file created. If you have a pre-existing Playlists file please restart the program after renaming it 'playlists.txt'.");
       }
-      else {
+      else {                                    // FILE FOUND ON FIRST TRY WITH NO PERSISTANCE. WELL DONE
         System.out.println(fileName + " successfully found and imported !");
       }
     }
@@ -505,7 +500,7 @@ public class LibraryManager_18347500 {
     return inFile;
   }
 
-  // Method created to output a list of lines from movieLibrary. Unique method because Movie and Playlist are different classes
+  // Method created to output a list of lines from movieLibrary.txt. Unique method because Movie and Playlist are different classes
   static List<Movie_18347500> initialiseMovieList() {
     List<Movie_18347500> outputList = new ArrayList<Movie_18347500>();
 
@@ -518,7 +513,7 @@ public class LibraryManager_18347500 {
     }
 
     while (fileScanner.hasNext()) {
-      String[] lineSplit = readInLine(fileScanner);                                 // Get Line split
+      String[] lineSplit = readInLineSplit(fileScanner);                                 // Get Line split
       Boolean hasRating = true;                                                     // hasRating uses length of array to decide if movie has rating
       if (lineSplit.length != 9) {
         hasRating = false;                                                          // If false, constructor leaves rating as empty
@@ -533,7 +528,7 @@ public class LibraryManager_18347500 {
 
   }
 
-  // Fills playlist List with contents of playlist.txt
+  // Fills playlist List with contents of playlist.txt. Unique method because Movie and Playlsit are different classes
   static List<Playlist_18347500> initialisePlaylistList() {
     List<Playlist_18347500> outputList = new ArrayList<Playlist_18347500>();        // OUTPUT list created
     File userInputFile = createFileInst("playlists.txt", false);                    // File created. Dp not persist in finding pre-existing file
@@ -546,7 +541,7 @@ public class LibraryManager_18347500 {
     }
 
     while (fileScanner.hasNext()) {
-      String[] lineSplit = readInLine(fileScanner);                                             // Splits the line up by commas
+      String[] lineSplit = readInLineSplit(fileScanner);                                             // Splits the line up by commas
       int playlistID = Integer.parseInt(lineSplit[0]);                                          // Playlist ID
       String playlistName = lineSplit[1];                                                       // Playlist Name
       int playlistLength = Integer.parseInt(lineSplit[2]);                                      // How many movies
@@ -581,7 +576,7 @@ public class LibraryManager_18347500 {
     return totalDuration;
   }
 
-  // Takes in Stringp[] and playlistLength to avoid .subList errors. loops through parsing to output List<Integer>
+  // getsPlaylistsMovieIDs from file input after making them ints in a List
   static List<Integer> getPlaylistMovIDs (String[] inStringArray, int playlistLength) {
     List<Integer> outIntList = new ArrayList<Integer>();
     int maxMovieIndex = 3 + playlistLength;
@@ -606,6 +601,5 @@ public class LibraryManager_18347500 {
     System.out.println("No movies named " + searchKey + " were found. Please change your search term.");
     return outputIndex;
   }
-
 
 }
