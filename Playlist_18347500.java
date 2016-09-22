@@ -35,6 +35,7 @@ public class Playlist_18347500 {
     name = playlistName;
     length = 0;
     duration = 0;
+    movies = new ArrayList<Integer>();
 
   }
 
@@ -71,8 +72,13 @@ public class Playlist_18347500 {
   // ## MUTATORS ##
 
   // Playlist ID Setter
-  public void addMovieToPlaylsit(int movieIndex) {
-    movies.add(movieIndex);     // Add Movie
-    length++;                   // Update Length
+  public void addToPlaylist(int movieIndex) {
+    this.movies.add(movieIndex);     // Add Movie
+    this.length++;                        // Update Length
+  }
+
+  // Playlist Duration Setter
+  public void setDuration(Float inputDuration) {
+    this.duration = inputDuration;
   }
 }

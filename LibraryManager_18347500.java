@@ -180,7 +180,7 @@ public class LibraryManager_18347500 {
       // ADD TO PLAYLIST
       case 3:
         // Add a movie to a playlist
-        System.out.println("ADD TO PLAYLIST OPTION");
+        addMovieToPlaylist();
         break;
 
       // EXIT
@@ -275,10 +275,21 @@ public class LibraryManager_18347500 {
     // SEARCH THEN SET RATING
     int movieIndex;
     do {
-      movieIndex = searchFor(getStrIn("Please enter a movie title to edit: "));   // Returns movie index if exits
+      movieIndex = searchForMovieIndex(getStrIn("Please enter a movie title: "));   // Returns movie index if exits
     } while (movieIndex == -1);
 
     return movieIndex;
+  }
+
+  // Returns the playlist's index in playlists list
+  static int findPlaylistIndex() {
+    // SEARCH THEN RETURN index
+    int playlistIndex;
+    do {
+      playlistIndex = searchForPlaylistIndex(getStrIn("Please enter a playlist title: "));
+    } while (playlistIndex == -1);
+
+    return playlistIndex;
   }
 
   // genreSubMenu is a sub menu of Movies for changing the rating of a movie
@@ -376,7 +387,7 @@ public class LibraryManager_18347500 {
   // Creates a Playlist Object then adds to the library
   static void addPlaylistSubMenu() throws IOException {
     int playlistIDNum = findMaxPlaylistID() + 1;                // Ensures no ID is a duplicate
-    String name = getStrIn(" Playlist Name:");                // Name NO VALIDATION
+    String name = getStrIn(" Playlist Name: ");                // Name NO VALIDATION
 
     Playlist_18347500 tempPlaylistObj = new Playlist_18347500(
       playlistIDNum,
@@ -384,6 +395,25 @@ public class LibraryManager_18347500 {
     );
 
     playlists.add(tempPlaylistObj);
+  }
+
+  // Add movie to playlist
+  static void addMovieToPlaylist() {
+    // find playlist index
+    int playlistIndex;
+    do {
+      playlistIndex = findPlaylistIndex();
+    } while (playlistIndex == -1);
+    // find movie index
+    int movieIndex;
+    do {
+      movieIndex = findMovieIndex();
+    } while (movieIndex == -1);
+    playlists.get(playlistIndex).addToPlaylist(movieIndex + 1);           // Off by one error with which movie was added
+    //TODO: [95] update duration after adding film, just run the method on the new list of movies
+
+    // Set Duration to sum of new movie list
+    playlists.get(playlistIndex).setDuration(sumMovieDurations(playlists.get(playlistIndex).getPlaylistMovies()));
   }
 
   // SHORT DESC
@@ -449,7 +479,7 @@ public class LibraryManager_18347500 {
 
     for (Playlist_18347500 playlist : inputList) {
       System.out.println("\n" + playlist.getPlaylistID() + ". " + playlist.getPlaylistName() + " ["+ playlist.getPlaylistLength() + " movies] {Total Runtime: " + playlist.getPlaylistDuration() + " hours}");
-      if (playlist.getPlaylistLength() != 0) {
+      if (playlist.getPlaylistLength() > 0) {
         for (int playlistMovieID : playlist.getPlaylistMovies()) {          // Loops though playlistMovie IDs
           for (Movie_18347500 libMovie : movieLibrary) {                    // Loops through movieLibrary movies
               if (playlistMovieID == libMovie.getMovieID()) {                 // checks playlistMovieID against movieLibraryID
@@ -596,7 +626,7 @@ public class LibraryManager_18347500 {
 
   }
 
-  // Fills playlist List with contents of playlist.txt. Unique method because Movie and Playlsit are different classes
+  // Fills playlist List with contents of playlist.txt. Unique method because Movie and Playlist are different classes
   static List<Playlist_18347500> initialisePlaylistList() {
     List<Playlist_18347500> outputList = new ArrayList<Playlist_18347500>();        // OUTPUT list created
     File userInputFile = createFileInst("playlists.txt", false);                    // File created. Dp not persist in finding pre-existing file
@@ -655,7 +685,7 @@ public class LibraryManager_18347500 {
   }
 
   // Returns movie index in library if search matches name. returns -1 if no match
-  static int searchFor(String searchKey) {
+  static int searchForMovieIndex(String searchKey) {
 
     //TODO: [70] Plan out Searching method
     // Objects.equals(A,B); will give value equality boolean
@@ -667,6 +697,19 @@ public class LibraryManager_18347500 {
     }
 
     System.out.println("No movies named " + searchKey + " were found. Please change your search term.");
+    return outputIndex;
+  }
+
+  // Returns playlist index in list if search matches name. returns -1 if no matche
+  static int searchForPlaylistIndex(String searchKey) {
+    int outputIndex = -1;
+    for (int i = 0; i < playlists.size(); i++) {
+      if (Objects.equals(searchKey, playlists.get(i).getPlaylistName())) {
+        return i;
+      }
+    }
+
+    System.out.println("No playlists with the name " + searchKey + " were found. Please change your search term.");
     return outputIndex;
   }
 
