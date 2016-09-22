@@ -40,22 +40,22 @@
 
 
 ## Taks to Complete:
-* [ ] *Movies*
+* [X] *Movies*
     * [X] Display ALL [Title, Duration, Genre, Classification, Rating]
       * Refer to IDEAS for possible format.
     * [X] Sort by
       * [X] Title
       * [X] Genre
-    * [ ] Add Rating
-      * [ ] Search Feature [Simple]
-      * [ ] Rating setter
-    * [ ] Change Genre
-      * [ ] Search Feature [Simple]
-      * [ ] Genre setter
-    * [ ] Add Movie
-      * [ ] Add new object
-      * [ ] Add object to library array
-    * [ ] Exit
+    * [X] Add Rating
+      * [X] Search Feature [Simple]
+      * [X] Rating setter
+    * [X] Change Genre
+      * [X] Search Feature [Simple]
+      * [X] Genre setter
+    * [X] Add Movie
+      * [X] Add new object
+      * [X] Add object to library array
+    * [X] Exit
 * [ ] *Playlists*
     * [X] Display Playlists
 * [ ] *Save*

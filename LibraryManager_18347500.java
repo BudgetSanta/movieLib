@@ -174,7 +174,7 @@ public class LibraryManager_18347500 {
       // CREATE
       case 2:
         // Create a playlist
-        System.out.println("IN CREATE PLAYLIST OPTION");
+        addPlaylistSubMenu();
         break;
 
       // ADD TO PLAYLIST
@@ -313,7 +313,7 @@ public class LibraryManager_18347500 {
     return false;
   }
 
-  // SHORT DESC
+  // Creates a Movie Object then adds to the library
   static void addMovieSubMenu() throws IOException  {
     // Create temp variables
     // Create Movie_18347500 object
@@ -360,6 +360,30 @@ public class LibraryManager_18347500 {
       }
     }
     return biggest;
+  }
+
+  // loop through to find the biggest playlist ID
+  static int findMaxPlaylistID() {
+    int biggest = -1;
+    for (Playlist_18347500 playlist : playlists) {
+      if (playlist.getPlaylistID() > biggest) {
+        biggest = playlist.getPlaylistID();
+      }
+    }
+    return biggest;
+  }
+
+  // Creates a Playlist Object then adds to the library
+  static void addPlaylistSubMenu() throws IOException {
+    int playlistIDNum = findMaxPlaylistID() + 1;                // Ensures no ID is a duplicate
+    String name = getStrIn(" Playlist Name:");                // Name NO VALIDATION
+
+    Playlist_18347500 tempPlaylistObj = new Playlist_18347500(
+      playlistIDNum,
+      name
+    );
+
+    playlists.add(tempPlaylistObj);
   }
 
   // SHORT DESC
@@ -425,10 +449,12 @@ public class LibraryManager_18347500 {
 
     for (Playlist_18347500 playlist : inputList) {
       System.out.println("\n" + playlist.getPlaylistID() + ". " + playlist.getPlaylistName() + " ["+ playlist.getPlaylistLength() + " movies] {Total Runtime: " + playlist.getPlaylistDuration() + " hours}");
-      for (int playlistMovieID : playlist.getPlaylistMovies()) {          // Loops though playlistMovie IDs
-        for (Movie_18347500 libMovie : movieLibrary) {                    // Loops through movieLibrary movies
-          if (playlistMovieID == libMovie.getMovieID()) {                 // checks playlistMovieID against movieLibraryID
-            System.out.println("\t" + libMovie.getMovieName());                  // prints out movie name
+      if (playlist.getPlaylistLength() != 0) {
+        for (int playlistMovieID : playlist.getPlaylistMovies()) {          // Loops though playlistMovie IDs
+          for (Movie_18347500 libMovie : movieLibrary) {                    // Loops through movieLibrary movies
+              if (playlistMovieID == libMovie.getMovieID()) {                 // checks playlistMovieID against movieLibraryID
+                System.out.println("\t" + libMovie.getMovieName());           // prints out movie name
+              }
           }
         }
       }

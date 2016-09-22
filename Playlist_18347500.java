@@ -17,7 +17,7 @@ public class Playlist_18347500 {
   String name;                  // Playlist name
   int length;                   // Number of movies in playlist
   float duration;               // Total duration of all movies in playlist
-  List<Integer> movies;          // Array of movie IDs (No movies is one movieID '0')
+  List<Integer> movies;         // Array of movie IDs (No movies is one movieID '0')
 
   public Playlist_18347500 (int idNum, String playlistName, int playlistLength, float playlistDuration, List<Integer> movieArray) {
 
@@ -26,6 +26,15 @@ public class Playlist_18347500 {
     length = playlistLength;
     duration = playlistDuration;
     movies = movieArray;
+
+  }
+
+  public Playlist_18347500 (int idNum, String playlistName) {
+
+    playlistID = idNum;
+    name = playlistName;
+    length = 0;
+    duration = 0;
 
   }
 
