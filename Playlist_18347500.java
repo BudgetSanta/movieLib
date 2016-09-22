@@ -67,4 +67,12 @@ public class Playlist_18347500 {
   public List<Integer> getPlaylistMovies() {
     return movies;
   }
+
+  // ## MUTATORS ##
+
+  // Playlist ID Setter
+  public void addMovieToPlaylsit(int movieIndex) {
+    movies.add(movieIndex);     // Add Movie
+    length++;                   // Update Length
+  }
 }
