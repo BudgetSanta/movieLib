@@ -314,10 +314,52 @@ public class LibraryManager_18347500 {
   }
 
   // SHORT DESC
-  static void addMovieSubMenu() {
-    // change return to Movie_18347500
-    System.out.println("IN ADD MOVIE SUB MENU");
-    // CREATE AND RETURN MOVIE OBJECT
+  static void addMovieSubMenu() throws IOException  {
+    // Create temp variables
+    // Create Movie_18347500 object
+    // Add object to movieLibrary
+    int movieIDNum = findMaxMovieID() + 1;                    // Ensures created ID is not a duplicate
+    String title = getStrIn("    Movie Title: ");             // Movie Title NO VALIDATION
+    String director = getStrIn("       Director: ");          // Director NO VALIDATION
+    String writer = getStrIn("         Writer: ");            // Writer NO VALIDATION
+    float duration = getFloatIn("   Duration (H): ");         // Duration FLOAT VALIDATION
+    String genre;                                             // Genre GENRE VALIDATION. USED IN genreSubMenu
+    do {
+      printGenres();
+      genre = getStrIn("          Genre: ");
+    } while (!isValidGenre(genre));
+    String classification = getStrIn(" Classification: ");    // Classification NO VALIDATION
+    String releaseDate = getStrIn("   Release Date: ");       // Release Date NO VALIDATION
+    float rating;                                             // Rating RATING VALIDATION. USED IN ratingSubMenu
+    do {
+      rating = getFloatIn("          Rating: ");
+    } while (!isValidRating(rating));
+
+    Movie_18347500 tempMovieObj = new Movie_18347500(
+      movieIDNum,
+      title,
+      director,
+      writer,
+      duration,
+      genre,
+      classification,
+      releaseDate,
+      rating
+    );
+
+    movieLibrary.add(tempMovieObj);
+
+  }
+
+  // Loop through to find the biggest movie ID
+  static int findMaxMovieID() {
+    int biggest = -1;
+    for (Movie_18347500 movie : movieLibrary) {
+      if (movie.getMovieID() > biggest) {
+        biggest = movie.getMovieID();
+      }
+    }
+    return biggest;
   }
 
   // SHORT DESC
@@ -360,7 +402,7 @@ public class LibraryManager_18347500 {
       outStr = getStrIn(prompt);
       // only if the loop is going to repeat again does it show an error
       if (!NumberValidation.isFloat(outStr)) {
-        System.out.println("ERROR: Not a valid float number. Please enter another choice.");
+        System.out.println("ERROR: Not a valid decimal number. Please enter another choice.");
       }
     }
     return Float.parseFloat(outStr);
