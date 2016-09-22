@@ -241,7 +241,7 @@ public class LibraryManager_18347500 {
       movieIndex = findMovieIndex();
     } while (movieIndex == -1);
 
-    System.out.println("This movies rating is " + movieLibrary.get(movieIndex).getMovieRating());
+    System.out.println("\n\t!! This movies rating is " + movieLibrary.get(movieIndex).getMovieRating());
 
     float rating;
     do {
@@ -251,8 +251,8 @@ public class LibraryManager_18347500 {
     movieLibrary.get(movieIndex).setMovieRating(rating);
     System.out.println("Movie {" + movieLibrary.get(movieIndex).getMovieName() + "} rating changed to " + movieLibrary.get(movieIndex).getMovieRating());
 
-    //TODO [90] RATING EDIT - take rating input and validate
-    //TODO [91] RATING EDIT - confirm (TITLE, prev Rating, new Rating)
+    //DONE [90] RATING EDIT - take rating input and validate
+    //DONE [91] RATING EDIT - confirm (TITLE, prev Rating, new Rating)
     //TODO [92] GENRE EDIT - copy and adjust for genre
     //TODO [93] Comment your shit man. c'mon seriously its a mess
   }
@@ -289,8 +289,34 @@ public class LibraryManager_18347500 {
 
   // SHORT DESC
   static void genreSubMenu() {
-    System.out.println("IN GENRE SUB MENU");
     // SEARCH THEN SET GENRE
+    int movieIndex;
+    do {
+      movieIndex = findMovieIndex();
+    } while (movieIndex == -1);
+
+    System.out.println("\n\t!! This movies genre is " + movieLibrary.get(movieIndex).getMovieGenre());
+
+    String newGenre;
+    do {
+      printGenres();
+      newGenre = getStrIn("Please enter a genre from above: ");
+    } while (!isValidGenre(newGenre));
+
+    movieLibrary.get(movieIndex).setMovieGenre(newGenre);
+    System.out.println("\n\t!! Movie {" + movieLibrary.get(movieIndex).getMovieName() + "} genre changed to " + movieLibrary.get(movieIndex).getMovieGenre());
+  }
+
+  // Boolean return on whether it is a valid genre
+  static Boolean isValidGenre(String newGenre) {
+    String[] genres = {"Action", "Adventure", "Comedy", "Crime", "Fantasy", "Family", "Romance", "Horror", "Drama", "Sci-fi", "Thriller"};
+    for (String validGenre : genres) {
+      if (Objects.equals(newGenre.toLowerCase(), validGenre.toLowerCase())) {
+        return true;
+      }
+    }
+    System.out.println(newGenre + " is not a valid genre. Please make another selection.");
+    return false;
   }
 
   // SHORT DESC
@@ -432,6 +458,16 @@ public class LibraryManager_18347500 {
     System.out.println("- 1. Sort Movies by Title");
     System.out.println("- 2. Sort Movies by Genre");
     System.out.println("- 3. Go Back");
+  }
+
+  // PRINT OUT FOR AVAILABLE GENRES
+  static void printGenres() {
+    System.out.println("");
+    System.out.println("Available Genres:");
+    System.out.println("\t- Action\t- Adventure\t- Comedy");
+    System.out.println("\t- Crime\t\t- Fantasy\t- Family");
+    System.out.println("\t- Romance\t- Horror\t- Drama");
+    System.out.println("\t- Sci-fi\t- Thriller");
   }
 
   // READ IN LINE ALL PURPOSE
