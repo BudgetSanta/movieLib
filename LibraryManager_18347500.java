@@ -254,8 +254,7 @@ public class LibraryManager_18347500 {
 
     //DONE [90] RATING EDIT - take rating input and validate
     //DONE [91] RATING EDIT - confirm (TITLE, prev Rating, new Rating)
-    //TODO [92] GENRE EDIT - copy and adjust for genre
-    //TODO [93] Comment your shit man. c'mon seriously its a mess
+    //DONE [92] GENRE EDIT - copy and adjust for genre
   }
 
   // isValidRating used in ratingSubMenu, contains the specifics of rating specifictions
@@ -410,7 +409,7 @@ public class LibraryManager_18347500 {
       movieIndex = findMovieIndex();
     } while (movieIndex == -1);
     playlists.get(playlistIndex).addToPlaylist(movieIndex + 1);           // Off by one error with which movie was added
-    //TODO: [95] update duration after adding film, just run the method on the new list of movies
+    //DONE: [95] update duration after adding film, just run the method on the new list of movies
 
     // Set Duration to sum of new movie list
     playlists.get(playlistIndex).setDuration(sumMovieDurations(playlists.get(playlistIndex).getPlaylistMovies()));
@@ -604,6 +603,7 @@ public class LibraryManager_18347500 {
 
     File userInputFile = createFileInst("movieLibrary.txt", true);                // Create File Instance based off user input
     Scanner fileScanner = new Scanner(System.in);            //FIXME              // Creating keyboard input first allows try catch for FNF and also 'may not be initialised issue'
+    // CANT THROW IOException OUTSIDE OF METHOD, DEFINING FILESCANNER AS SYS.IN THEN AS INPUT AVOIDED NON DECLARED IOException
     try {
       fileScanner = new Scanner(userInputFile);                                   // Creates scanner instance based off file instance
     } catch (Exception e) {
@@ -687,7 +687,7 @@ public class LibraryManager_18347500 {
   // Returns movie index in library if search matches name. returns -1 if no match
   static int searchForMovieIndex(String searchKey) {
 
-    //TODO: [70] Plan out Searching method
+    //DONE: [70] Plan out Searching method
     // Objects.equals(A,B); will give value equality boolean
     int outputIndex = -1;
     for (int i = 0; i < movieLibrary.size()-1; i++) {
