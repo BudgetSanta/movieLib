@@ -8,7 +8,7 @@ In Progress Tasks (Currently working on)
 Completed Taks
   //D0NE: [[OrderNum][SubOrderNum]] Task Details [Completion Notes]
 */
-import java.util.Comparator;
+//import java.util.Comparator;
 
 public class Movie_18347500 {
 
@@ -35,6 +35,10 @@ public class Movie_18347500 {
       rating = movieRating;
     }
 
+    public Movie_18347500 () {
+      movieID = -1;
+    }
+
     public Movie_18347500(String[] inputList, Boolean hasRating) {
 
       movieID = Integer.parseInt(inputList[0]);
@@ -50,19 +54,19 @@ public class Movie_18347500 {
       }
     }
 
-    // Uses Comparator to sort through Movie Ojbects by name Attribute
-    public static Comparator<Movie_18347500> COMPARE_BY_NAME = new Comparator<Movie_18347500>() {
-      public int compare(Movie_18347500 one, Movie_18347500 other) {
-        return one.getMovieName().compareTo(other.getMovieName());
-      }
-    };
-
-    // Uses Comparator to sort through Movie Objects by genre Attribute
-    public static Comparator<Movie_18347500> COMPARE_BY_GENRE = new Comparator<Movie_18347500>() {
-        public int compare(Movie_18347500 one, Movie_18347500 other) {
-            return one.getMovieGenre().compareTo(other.getMovieGenre());
-        }
-    };
+    // // Uses Comparator to sort through Movie Ojbects by name Attribute
+    // public static Comparator<Movie_18347500> COMPARE_BY_NAME = new Comparator<Movie_18347500>() {
+    //   public int compare(Movie_18347500 one, Movie_18347500 other) {
+    //     return one.getMovieName().compareTo(other.getMovieName());
+    //   }
+    // };
+    //
+    // // Uses Comparator to sort through Movie Objects by genre Attribute
+    // public static Comparator<Movie_18347500> COMPARE_BY_GENRE = new Comparator<Movie_18347500>() {
+    //     public int compare(Movie_18347500 one, Movie_18347500 other) {
+    //         return one.getMovieGenre().compareTo(other.getMovieGenre());
+    //     }
+    // };
 
     // DONE: [10] Movie Getters
 

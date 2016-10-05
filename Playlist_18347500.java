@@ -8,8 +8,8 @@ In Progress Tasks (Currently working on)
 Completed Taks
   //D0NE: [[OrderNum][SubOrderNum]] Task Details [Completion Notes]
 */
-import java.util.ArrayList;
-import java.util.List;
+// import java.util.ArrayList;
+// import java.util.List;
 
 public class Playlist_18347500 {
 
@@ -17,9 +17,9 @@ public class Playlist_18347500 {
   String name;                  // Playlist name
   int length;                   // Number of movies in playlist
   float duration;               // Total duration of all movies in playlist
-  List<Integer> movies;         // Array of movie IDs (No movies is one movieID '0')
+  int[] movies;                 // Array of movie IDs (No movies is one movieID '0')
 
-  public Playlist_18347500 (int idNum, String playlistName, int playlistLength, float playlistDuration, List<Integer> movieArray) {
+  public Playlist_18347500 (int idNum, String playlistName, int playlistLength, float playlistDuration, int[] movieArray) {
 
     playlistID = idNum;
     name = playlistName;
@@ -29,13 +29,17 @@ public class Playlist_18347500 {
 
   }
 
+  public Playlist_18347500 () {
+    playlistID = -1;
+  }
+
   public Playlist_18347500 (int idNum, String playlistName) {
 
     playlistID = idNum;
     name = playlistName;
     length = 0;
     duration = 0;
-    movies = new ArrayList<Integer>();
+    movies = new int[100];
 
   }
 
@@ -65,16 +69,16 @@ public class Playlist_18347500 {
   }
 
   // Playlist movie array Getter
-  public List<Integer> getPlaylistMovies() {
+  public int[] getPlaylistMovies() {
     return movies;
   }
 
   // ## MUTATORS ##
 
   // Playlist ID Setter
-  public void addToPlaylist(int movieIndex) {
-    this.movies.add(movieIndex);     // Add Movie
-    this.length++;                        // Update Length
+  public void addToPlaylist(int movieIndex, int nextFreeIndex) {
+    this.movies[nextFreeIndex] = movieIndex;     // Add Movie
+    this.length++;                               // Update Length
   }
 
   // Playlist Duration Setter
