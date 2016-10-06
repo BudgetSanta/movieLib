@@ -10,8 +10,13 @@ Completed Taks
 */
 // import java.util.ArrayList;
 // import java.util.List;
+import java.util.Arrays;
 
 public class Playlist_18347500 {
+
+  //CONSTANTS
+  public static final int INIT_LENGTH = 50;
+  public static final int EXPAND_SIZE = 10;
 
   int playlistID;               // Unique ID for playlist
   String name;                  // Playlist name
@@ -31,8 +36,8 @@ public class Playlist_18347500 {
 
   public Playlist_18347500 () {
     playlistID = -1;
-    movies = new int[100];
-    for (int a = 0; a < 100; a++) {
+    movies = new int[INIT_LENGTH];
+    for (int a = 0; a < INIT_LENGTH; a++) {
       movies[a] = -1;
     }
   }
@@ -43,8 +48,8 @@ public class Playlist_18347500 {
     name = playlistName;
     length = 0;
     duration = 0;
-    movies = new int[100];
-    for (int a = 0; a < 100; a++) {
+    movies = new int[INIT_LENGTH];
+    for (int a = 0; a < INIT_LENGTH; a++) {
       movies[a] = -1;
     }
   }
@@ -69,6 +74,15 @@ public class Playlist_18347500 {
     return length;
   }
 
+  // Playlist total available length getter
+  public int getPlaylistTotalLength() {
+    int count = 0;
+    for (int mov : movies) {
+      count ++;
+    }
+    return count;
+  }
+
   // Playlist duration Getter
   public float getPlaylistDuration() {
     return duration;
@@ -81,12 +95,23 @@ public class Playlist_18347500 {
 
   // ## MUTATORS ##
 
-  // Playlist ID Setter
+  // Add MovieID to a Playlist
   public void addToPlaylist(int movieIndex) {
     int nextFreeIndex = this.getPlaylistLength();  // Length will account for index off by one error
     this.movies[nextFreeIndex] = movieIndex;       // Add Movie
     this.length++;                                 // Update Length
   }
+
+  // Playlist movices Array Expander
+  public void expandPlaylist() {
+    int originalSize = getPlaylistLength();                             // To reference where to start filling in blank movies later
+    movies = Arrays.copyOf(movies, originalSize + EXPAND_SIZE);    // Copy movieLibrary to itself but larger
+    for (int i = originalSize; i < originalSize + EXPAND_SIZE; i++) {          // Fill in blanks
+      movies[i] = -1;
+    }
+  }
+
+  // ## SETTERS ##
 
   // Playlist Duration Setter
   public void setDuration(Float inputDuration) {
