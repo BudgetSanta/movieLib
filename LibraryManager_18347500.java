@@ -757,6 +757,8 @@ public class LibraryManager_18347500 {
     return outputIndex;
   }
 
+
+  // move to classes and use as .size()
   static int numMovieObjects() {
     int movieCounter = 0;
     for (Movie_18347500 movie : movieLibrary) {
