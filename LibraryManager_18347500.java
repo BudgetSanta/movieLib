@@ -16,6 +16,11 @@ Completed Taks
   - Blank ratings remain blank or 0?
   - Supposed to accomodate for growing Array, if list 101 in length,new array?
 
+ANSWERS
+ - movieLibrary.txt ID will be indexs off by one
+ - Need a NaN rating
+ - grow array method
+
 */
 
 import java.io.*;
@@ -28,6 +33,7 @@ public class LibraryManager_18347500 {
 
   // Constants
   public static final int LIB_SIZE = 150;
+  public static final int EXPAND_SIZE = 10;
 
   // Global Keyboard Instance
   public static Scanner kb = new Scanner(System.in);
@@ -369,6 +375,10 @@ public class LibraryManager_18347500 {
       rating
     );
 
+    if (numMovieObjects() == numMovieIndexes()) {
+      expandMovieArray();
+    }
+
     movieLibrary[movieIDNum - 1] = tempMovieObj;              // Assigns film to next available index because ID is off by one of indexes
 
   }
@@ -405,6 +415,10 @@ public class LibraryManager_18347500 {
       name
     );
 
+    if (numPlaylistObjects() == numPlaylistIndexes()) {
+      expandPlaylistArray();
+    }
+
     playlists[playlistIDNum - 1] = tempPlaylistObj;             // Array index is ID num off by one
   }
 
@@ -420,6 +434,11 @@ public class LibraryManager_18347500 {
     do {
       movieIndex = findMovieIndex() + 1;                          // Off by one error
     } while (movieIndex == -1);
+
+    if (playlists[playlistIndex].getPlaylistLength() == playlists[playlistIndex].getPlaylistTotalLength()) {
+      playlists[playlistIndex].expandPlaylist();
+    }
+
     playlists[playlistIndex].addToPlaylist(movieIndex);
     //DONE: [95] update duration after adding film, just run the method on the new list of movies
 
@@ -622,7 +641,7 @@ public class LibraryManager_18347500 {
     int arrayCounter = 0;
 
     File userInputFile = createFileInst("movieLibrary.txt", true);                // Create File Instance based off user input
-    Scanner fileScanner = new Scanner(System.in);            //FIXME              // Creating keyboard input first allows try catch for FNF and also 'may not be initialised issue'
+    Scanner fileScanner = new Scanner(System.in);                                 // Creating keyboard input first allows try catch for FNF and also 'may not be initialised issue'
     // CANT THROW IOException OUTSIDE OF METHOD, DEFINING FILESCANNER AS SYS.IN THEN AS INPUT AVOIDED NON DECLARED IOException
     // NEXT TRY CATCH WILL NOT FAIL. createFileInst(file, true) above validates file name
     try {
@@ -632,7 +651,7 @@ public class LibraryManager_18347500 {
     }
 
     while (fileScanner.hasNext()) {
-      String[] lineSplit = readInLineSplit(fileScanner);                                 // Get Line split
+      String[] lineSplit = readInLineSplit(fileScanner);                            // Get Line split
       Boolean hasRating = true;                                                     // hasRating uses length of array to decide if movie has rating
       if (lineSplit.length != 9) {
         hasRating = false;                                                          // If false, constructor leaves rating as empty
@@ -641,6 +660,9 @@ public class LibraryManager_18347500 {
 
       outputArray[arrayCounter] = tempMovieObj;                                                // Assign object to array
       arrayCounter ++;                                                              // update counter for next index
+      if (arrayCounter == LIB_SIZE) {
+        outputArray = Arrays.copyOf(outputArray, arrayCounter + 10);                // Ensures when reading in, library isn't filled
+      }
     }
 
     // FILL IN THE REST OF LIBRARY WITH BLANK MOVIES
@@ -688,6 +710,9 @@ public class LibraryManager_18347500 {
       outputArray[arrayCounter] = tempPlaylistObj;
       arrayCounter ++;
 
+      if (arrayCounter == LIB_SIZE) {
+        outputArray = Arrays.copyOf(outputArray, arrayCounter + 10);                // Ensures when reading in, library isn't filled
+      }
     }
 
     // FILL IN THE REST OF LIBRARY WITH BLANK MOVIES
@@ -715,8 +740,8 @@ public class LibraryManager_18347500 {
 
   // getsPlaylistsMovieIDs from file input after making them ints in a List
   static int[] getPlaylistMovIDs (String[] inStringArray, int playlistLength) {
-    int[] outIntArray = new int[100];
-    for (int a = 0; a < 100; a++) {             // Assigns all movies ID of -1 so if unused, not seen 'as a movie'
+    int[] outIntArray = new int[LIB_SIZE];
+    for (int a = 0; a < LIB_SIZE; a++) {             // Assigns all movies ID of -1 so if unused, not seen 'as a movie'
       outIntArray[a] = -1;
     }
     int outInArrayCounter = 0;
@@ -769,6 +794,14 @@ public class LibraryManager_18347500 {
     return movieCounter;
   }
 
+  static int numMovieIndexes() {
+    int movieCounter = 0;
+    for (Movie_18347500 movie : movieLibrary) {
+      movieCounter ++;
+    }
+    return movieCounter;
+  }
+
   static int numPlaylistObjects() {
     int playlistCounter = 0;
     for (Playlist_18347500 playlist : playlists) {
@@ -777,6 +810,30 @@ public class LibraryManager_18347500 {
       }
     }
     return playlistCounter;
+  }
+
+  static int numPlaylistIndexes() {
+    int playlistCounter = 0;
+    for (Playlist_18347500 playlist : playlists) {
+      playlistCounter ++;
+    }
+    return playlistCounter;
+  }
+
+  static void expandMovieArray() {
+    int originalSize = numMovieObjects();                             // To reference where to start filling in blank movies later
+    movieLibrary = Arrays.copyOf(movieLibrary, originalSize + EXPAND_SIZE);    // Copy movieLibrary to itself but larger
+    for (int i = originalSize; i < originalSize + EXPAND_SIZE; i++) {          // Fill in blanks
+      movieLibrary[i] = new Movie_18347500();
+    }
+  }
+
+  static void expandPlaylistArray() {
+    int originalSize = numPlaylistObjects();                          // Where to start filling in blank playlists
+    playlists = Arrays.copyOf(playlists, originalSize + EXPAND_SIZE);          // Copy playlists to itself but larger
+    for (int i = originalSize; i < originalSize + EXPAND_SIZE; i++) {          // Fill in blanks
+      playlists[i] = new Playlist_18347500();
+    }
   }
 
 }
