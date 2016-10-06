@@ -54,6 +54,9 @@ public class Movie_18347500 {
       if (hasRating) {
         rating = Float.parseFloat(inputList[8]);
       }
+      else {
+        rating = (float)(-1);
+      }
     }
 
     // Uses Comparator to sort through Movie Ojbects by name Attribute

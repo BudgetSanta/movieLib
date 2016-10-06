@@ -263,11 +263,12 @@ public class LibraryManager_18347500 {
 
     float rating;
     do {
-      rating = getFloatIn("Please enter the new rating: ");
+      rating = getFloatIn("Please enter the new rating: ", true);
     } while (!isValidRating(rating));
 
     movieLibrary[movieIndex].setMovieRating(rating);
-    System.out.println("Movie {" + movieLibrary[movieIndex].getMovieName() + "} rating changed to " + movieLibrary[movieIndex].getMovieRating());
+    String tempRating = displayRating(movieLibrary[movieIndex].getMovieRating());
+    System.out.println("Movie {" + movieLibrary[movieIndex].getMovieName() + "} rating changed to " + tempRating);
 
     //DONE [90] RATING EDIT - take rating input and validate
     //DONE [91] RATING EDIT - confirm (TITLE, prev Rating, new Rating)
@@ -276,12 +277,15 @@ public class LibraryManager_18347500 {
 
   // isValidRating used in ratingSubMenu, contains the specifics of rating specifictions
   static Boolean isValidRating(float rating) {
-    if ( (0.0 <= rating && rating <= 5.0) && rating % 0.5 == 0) {    // Whole and half numbers can be divided by 0.5 with no remainder
-      return true;                                                   // Only whole and half number can be ratings
+    if (rating == -1.0) {
+      return true;                                                          // Blank rating flag
+    }
+    if ((0.0 <= rating && rating <= 5.0) && rating % 0.5 == 0) {            // Whole and half numbers can be divided by 0.5 with no remainder
+      return true;                                                          // Only whole and half number can be ratings
     }
     else {
       System.out.println("\n # " + rating + " is not a valid rating.");
-      System.out.println("\tRATING MUST BE\n\t - Between 0 and 5\n\t - A whole or half number\n\t - e.g. 0,1.5 or 4.0");
+      System.out.println("\tRATING MUST BE\n\t - Between 0 and 5\n\t - A whole or half number\n\t - e.g. 0,1.5 or 4.0\n\t - Blank for a non rating");
       return false;
     }
   }
@@ -349,7 +353,7 @@ public class LibraryManager_18347500 {
     String title = getStrIn("    Movie Title: ");             // Movie Title    NO VALIDATION
     String director = getStrIn("       Director: ");          // Director       NO VALIDATION
     String writer = getStrIn("         Writer: ");            // Writer         NO VALIDATION
-    float duration = getFloatIn("   Duration (H): ");         // Duration       FLOAT VALIDATION
+    float duration = getFloatIn("   Duration (H): ", false);  // Duration       FLOAT VALIDATION
     String genre;                                             // Genre          GENRE VALIDATION. USED IN genreSubMenu
     do {
       printGenres();
@@ -360,7 +364,7 @@ public class LibraryManager_18347500 {
     String releaseDate = getStrIn("   Release Date: ");       // Release Date   NO VALIDATION
     float rating;                                             // Rating         RATING VALIDATION. USED IN ratingSubMenu
     do {
-      rating = getFloatIn("         Rating: ");
+      rating = getFloatIn("         Rating: ", true);
     } while (!isValidRating(rating));
 
     Movie_18347500 tempMovieObj = new Movie_18347500(
@@ -479,13 +483,16 @@ public class LibraryManager_18347500 {
   }
 
   // Combined prompt and VALIDATED Float input return
-  static Float getFloatIn(String prompt) throws IOException {
+  static Float getFloatIn(String prompt, Boolean isRating) throws IOException {
 
     // Takes string input to validate as float
     String outStr = "";
     // keeps asking for input while not a valid float
     while (!NumberValidation.isFloat(outStr)) {
       outStr = getStrIn(prompt);
+      if (Objects.equals(outStr, "")) {     // Rating can be a blank value
+        return (float)(-1);
+      }
       // only if the loop is going to repeat again does it show an error
       if (!NumberValidation.isFloat(outStr)) {
         System.out.println("ERROR: Not a valid decimal number. Please enter another choice.");
@@ -498,8 +505,10 @@ public class LibraryManager_18347500 {
   static void displayAllMovies(Movie_18347500[] inputList) {
     //DONE: [50] Display input array list of Movie objects
     for (Movie_18347500 movie : inputList) {
+
+      String checkedRating = displayRating(movie.getMovieRating());             // Better formatting of the rating and blanks option
       if (movie.getMovieID() >= 0) {
-        System.out.println(movie.getMovieID() + ". " + movie.getMovieName() + " {" + movie.getMovieRating() + "/5} [Released: " + movie.getMovieRelease() + "]");
+        System.out.println(movie.getMovieID() + ". " + movie.getMovieName() + " " + checkedRating + " [Released: " + movie.getMovieRelease() + "]");
         System.out.println("\tDURATION: " + movie.getMovieDuration() + " hours\t\tWRITER: " + movie.getMovieWriter());
         System.out.println("\tCLASSIFICATION: " + movie.getMovieClassification() + "\t\tDIRECTOR: " + movie.getMovieDirector());
         System.out.println("\tGENRE: " + movie.getMovieGenre() + "\n");
@@ -834,6 +843,17 @@ public class LibraryManager_18347500 {
     for (int i = originalSize; i < originalSize + EXPAND_SIZE; i++) {          // Fill in blanks
       playlists[i] = new Playlist_18347500();
     }
+  }
+
+  static String displayRating(float rating) {
+    String tempRating;
+    if (rating == (float)(-1)) {
+      tempRating = "{NO RATING}";
+    }
+    else {
+      tempRating = "{" + rating + "/5}";
+    }
+    return tempRating;
   }
 
 }
