@@ -8,20 +8,31 @@ In Progress Tasks (Currently working on)
 Completed Taks
   //D0NE: [[OrderNum][SubOrderNum]] Task Details [Completion Notes]
 */
+
+/*
+ QUESTIONS:
+
+  - Will each movieLibrary.txt movie id be their position in the array + 1?
+  - Blank ratings remain blank or 0?
+  - Supposed to accomodate for growing Array, if list 101 in length,new array?
+
+*/
+
 import java.io.*;
 import java.util.Scanner;
 import java.util.Objects;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Collection;
-import java.util.Collections;
+import java.util.Comparator;
+import java.util.Arrays;
 
 public class LibraryManager_18347500 {
 
+  // Constants
+  public static final int LIB_SIZE = 150;
+
   // Global Keyboard Instance
   public static Scanner kb = new Scanner(System.in);
-  public static List<Movie_18347500> movieLibrary = initialiseMovieList();                    // Initialises Movie Library to List
-  public static List<Playlist_18347500> playlists = initialisePlaylistList();                 // Initialises Playlists to List
+  public static Movie_18347500[] movieLibrary = initialiseMovieList();                    // Initialises Movie Library to List
+  public static Playlist_18347500[] playlists = initialisePlaylistList();                 // Initialises Playlists to List
 
   public static void main(String[] args) throws IOException{
 
@@ -40,7 +51,7 @@ public class LibraryManager_18347500 {
   }
 
   // This is the menu that calls all sub menus and repeats with menuLoopFlags
-  static void rootMenu(List<Movie_18347500> movieLibrary, List<Playlist_18347500> playlists) throws IOException{
+  static void rootMenu(Movie_18347500[] movieLibrary, Playlist_18347500[] playlists) throws IOException{
 
     // DONE: [20] Get basic Menu navigation working
     // Menu Loop Flags
@@ -242,15 +253,15 @@ public class LibraryManager_18347500 {
       movieIndex = findMovieIndex();
     } while (movieIndex == -1);
 
-    System.out.println("\n\t!! This movies rating is " + movieLibrary.get(movieIndex).getMovieRating());
+    System.out.println("\n\t!! This movies rating is " + movieLibrary[movieIndex].getMovieRating() + "\n");
 
     float rating;
     do {
       rating = getFloatIn("Please enter the new rating: ");
     } while (!isValidRating(rating));
 
-    movieLibrary.get(movieIndex).setMovieRating(rating);
-    System.out.println("Movie {" + movieLibrary.get(movieIndex).getMovieName() + "} rating changed to " + movieLibrary.get(movieIndex).getMovieRating());
+    movieLibrary[movieIndex].setMovieRating(rating);
+    System.out.println("Movie {" + movieLibrary[movieIndex].getMovieName() + "} rating changed to " + movieLibrary[movieIndex].getMovieRating());
 
     //DONE [90] RATING EDIT - take rating input and validate
     //DONE [91] RATING EDIT - confirm (TITLE, prev Rating, new Rating)
@@ -299,7 +310,7 @@ public class LibraryManager_18347500 {
       movieIndex = findMovieIndex();
     } while (movieIndex == -1);
 
-    System.out.println("\n\t!! This movies genre is " + movieLibrary.get(movieIndex).getMovieGenre());
+    System.out.println("\n\t!! This movies genre is " + movieLibrary[movieIndex].getMovieGenre());
 
     String newGenre;
     do {
@@ -307,8 +318,8 @@ public class LibraryManager_18347500 {
       newGenre = getStrIn("Please enter a genre from above: ");
     } while (!isValidGenre(newGenre));
 
-    movieLibrary.get(movieIndex).setMovieGenre(newGenre);
-    System.out.println("\n\t!! Movie {" + movieLibrary.get(movieIndex).getMovieName() + "} genre changed to " + movieLibrary.get(movieIndex).getMovieGenre());
+    movieLibrary[movieIndex].setMovieGenre(newGenre);
+    System.out.println("\n\t!! Movie {" + movieLibrary[movieIndex].getMovieName() + "} genre changed to " + movieLibrary[movieIndex].getMovieGenre());
   }
 
   // isValidGenre used in genreSubMenu, contains the specifics of rating specifictions
@@ -329,20 +340,21 @@ public class LibraryManager_18347500 {
     // Create Movie_18347500 object
     // Add object to movieLibrary
     int movieIDNum = findMaxMovieID() + 1;                    // Ensures created ID is not a duplicate
-    String title = getStrIn("    Movie Title: ");             // Movie Title NO VALIDATION
-    String director = getStrIn("       Director: ");          // Director NO VALIDATION
-    String writer = getStrIn("         Writer: ");            // Writer NO VALIDATION
-    float duration = getFloatIn("   Duration (H): ");         // Duration FLOAT VALIDATION
-    String genre;                                             // Genre GENRE VALIDATION. USED IN genreSubMenu
+    String title = getStrIn("    Movie Title: ");             // Movie Title    NO VALIDATION
+    String director = getStrIn("       Director: ");          // Director       NO VALIDATION
+    String writer = getStrIn("         Writer: ");            // Writer         NO VALIDATION
+    float duration = getFloatIn("   Duration (H): ");         // Duration       FLOAT VALIDATION
+    String genre;                                             // Genre          GENRE VALIDATION. USED IN genreSubMenu
     do {
       printGenres();
       genre = getStrIn("          Genre: ");
     } while (!isValidGenre(genre));
     String classification = getStrIn(" Classification: ");    // Classification NO VALIDATION
-    String releaseDate = getStrIn("   Release Date: ");       // Release Date NO VALIDATION
-    float rating;                                             // Rating RATING VALIDATION. USED IN ratingSubMenu
+    System.out.println("Date Format (DD MONTH YEAR)");
+    String releaseDate = getStrIn("   Release Date: ");       // Release Date   NO VALIDATION
+    float rating;                                             // Rating         RATING VALIDATION. USED IN ratingSubMenu
     do {
-      rating = getFloatIn("          Rating: ");
+      rating = getFloatIn("         Rating: ");
     } while (!isValidRating(rating));
 
     Movie_18347500 tempMovieObj = new Movie_18347500(
@@ -357,7 +369,7 @@ public class LibraryManager_18347500 {
       rating
     );
 
-    movieLibrary.add(tempMovieObj);
+    movieLibrary[movieIDNum - 1] = tempMovieObj;              // Assigns film to next available index because ID is off by one of indexes
 
   }
 
@@ -393,7 +405,7 @@ public class LibraryManager_18347500 {
       name
     );
 
-    playlists.add(tempPlaylistObj);
+    playlists[playlistIDNum - 1] = tempPlaylistObj;             // Array index is ID num off by one
   }
 
   // Add movie to playlist
@@ -406,13 +418,15 @@ public class LibraryManager_18347500 {
     // find movie index
     int movieIndex;
     do {
-      movieIndex = findMovieIndex();
+      movieIndex = findMovieIndex() + 1;                          // Off by one error
     } while (movieIndex == -1);
-    playlists.get(playlistIndex).addToPlaylist(movieIndex + 1);           // Off by one error with which movie was added
+    playlists[playlistIndex].addToPlaylist(movieIndex);
     //DONE: [95] update duration after adding film, just run the method on the new list of movies
 
     // Set Duration to sum of new movie list
-    playlists.get(playlistIndex).setDuration(sumMovieDurations(playlists.get(playlistIndex).getPlaylistMovies()));
+    playlists[playlistIndex].setDuration(sumMovieDurations(playlists[playlistIndex].getPlaylistMovies()));
+
+    System.out.println("\n\t!! Movie {" + movieLibrary[movieIndex-1].getMovieName() + "} was added to playlist {" + playlists[playlistIndex].getPlaylistName() + "}");        // Strange off by one error
   }
 
   // SHORT DESC
@@ -462,28 +476,33 @@ public class LibraryManager_18347500 {
   }
 
   // displayAllMovies takes any sort of movieLibrary and displays it
-  static void displayAllMovies(List<Movie_18347500> inputList) {
+  static void displayAllMovies(Movie_18347500[] inputList) {
     //DONE: [50] Display input array list of Movie objects
     for (Movie_18347500 movie : inputList) {
-      System.out.println(movie.getMovieID() + ". " + movie.getMovieName() + " {" + movie.getMovieRating() + "/5} [Released: " + movie.getMovieRelease() + "]");
-      System.out.println("\tDURATION: " + movie.getMovieDuration() + " hours\t\tWRITER: " + movie.getMovieWriter());
-      System.out.println("\tCLASSIFICATION: " + movie.getMovieClassification() + "\t\tDIRECTOR: " + movie.getMovieDirector());
-      System.out.println("\tGENRE: " + movie.getMovieGenre());
-      System.out.println("");
+      if (movie.getMovieID() >= 0) {
+        System.out.println(movie.getMovieID() + ". " + movie.getMovieName() + " {" + movie.getMovieRating() + "/5} [Released: " + movie.getMovieRelease() + "]");
+        System.out.println("\tDURATION: " + movie.getMovieDuration() + " hours\t\tWRITER: " + movie.getMovieWriter());
+        System.out.println("\tCLASSIFICATION: " + movie.getMovieClassification() + "\t\tDIRECTOR: " + movie.getMovieDirector());
+        System.out.println("\tGENRE: " + movie.getMovieGenre() + "\n");
+      }
     }
   }
 
   // displayAllPlaylists takes the playlist list and displays it
-  static void displayAllPlaylists(List<Playlist_18347500> inputList) {
+  static void displayAllPlaylists(Playlist_18347500[] inputList) {
 
     for (Playlist_18347500 playlist : inputList) {
-      System.out.println("\n" + playlist.getPlaylistID() + ". " + playlist.getPlaylistName() + " ["+ playlist.getPlaylistLength() + " movies] {Total Runtime: " + playlist.getPlaylistDuration() + " hours}");
-      if (playlist.getPlaylistLength() > 0) {
-        for (int playlistMovieID : playlist.getPlaylistMovies()) {          // Loops though playlistMovie IDs
-          for (Movie_18347500 libMovie : movieLibrary) {                    // Loops through movieLibrary movies
-              if (playlistMovieID == libMovie.getMovieID()) {                 // checks playlistMovieID against movieLibraryID
-                System.out.println("\t" + libMovie.getMovieName());           // prints out movie name
+      if (playlist.getPlaylistID() > 0) {
+        System.out.println("\n" + playlist.getPlaylistID() + ". " + playlist.getPlaylistName() + " ["+ playlist.getPlaylistLength() + " movies] {Total Runtime: " + playlist.getPlaylistDuration() + " hours}");
+        if (playlist.getPlaylistLength() > 0) {
+          for (int playlistMovieID : playlist.getPlaylistMovies()) {          // Loops though playlistMovie IDs
+            if (playlistMovieID > 0) {
+              for (Movie_18347500 libMovie : movieLibrary) {                    // Loops through movieLibrary movies
+                  if (playlistMovieID == libMovie.getMovieID()) {               // checks playlistMovieID against movieLibraryID
+                    System.out.println("\t" + libMovie.getMovieName());         // prints out movie name
+                  }
               }
+            }
           }
         }
       }
@@ -491,30 +510,30 @@ public class LibraryManager_18347500 {
   }
 
   // Sorts the movie library alphabetically
-  static List<Movie_18347500> sortByTitle() {
+  static Movie_18347500[] sortByTitle() {
 
     //DONE: [60] Move in Sort codes
     // Display movies by title
-    List<Movie_18347500> alphaSorted = movieLibrary;                  // Creates a List to manipulate
-    Collections.sort(alphaSorted, Movie_18347500.COMPARE_BY_NAME);    // Sorts based on name.
-    return alphaSorted;                                               // returns the Movies in order of sort
+    Movie_18347500[] alphaSorted = movieLibrary;               // Creates a List to manipulate
+    Arrays.sort(alphaSorted, Movie_18347500.COMPARE_BY_NAME);  // Sorts based on name.
+    return alphaSorted;                                        // returns the Movies in order of sort
 
   }
 
   // Sorts the movie library alphabetically within an alphabetical genre sort
-  static List<Movie_18347500> sortByGenre() {
+  static Movie_18347500[] sortByGenre() {
 
     //DONE: [61] Move in sort code
-    List<Movie_18347500> genreSorted = movieLibrary;
-    Collections.sort(genreSorted, Movie_18347500.COMPARE_BY_NAME);          // Sort sort by name first
-    Collections.sort(genreSorted, Movie_18347500.COMPARE_BY_GENRE);         // Sorts by genre second so that in a genre movies are alphabetical
+    Movie_18347500[] genreSorted = movieLibrary;
+    Arrays.sort(genreSorted, Movie_18347500.COMPARE_BY_NAME);          // Sort sort by name first
+    Arrays.sort(genreSorted, Movie_18347500.COMPARE_BY_GENRE);         // Sorts by genre second so that in a genre movies are alphabetical
     return genreSorted;
   }
 
   // ROOT MENU OPTIONS PRINT OUT
   static void printRootMenuOptions() {
     System.out.println("");
-    System.out.println("## ROOT MENU ##");
+    System.out.println("## MAIN MENU ##");
     System.out.println("- 1. Movies");
     System.out.println("- 2. Playlists");
     System.out.println("- 3. Save");
@@ -598,12 +617,14 @@ public class LibraryManager_18347500 {
   }
 
   // Method created to output a list of lines from movieLibrary.txt. Unique method because Movie and Playlist are different classes
-  static List<Movie_18347500> initialiseMovieList() {
-    List<Movie_18347500> outputList = new ArrayList<Movie_18347500>();
+  static Movie_18347500[] initialiseMovieList() {
+    Movie_18347500[] outputArray = new Movie_18347500[LIB_SIZE];
+    int arrayCounter = 0;
 
     File userInputFile = createFileInst("movieLibrary.txt", true);                // Create File Instance based off user input
     Scanner fileScanner = new Scanner(System.in);            //FIXME              // Creating keyboard input first allows try catch for FNF and also 'may not be initialised issue'
     // CANT THROW IOException OUTSIDE OF METHOD, DEFINING FILESCANNER AS SYS.IN THEN AS INPUT AVOIDED NON DECLARED IOException
+    // NEXT TRY CATCH WILL NOT FAIL. createFileInst(file, true) above validates file name
     try {
       fileScanner = new Scanner(userInputFile);                                   // Creates scanner instance based off file instance
     } catch (Exception e) {
@@ -618,20 +639,30 @@ public class LibraryManager_18347500 {
       }
       Movie_18347500 tempMovieObj = new Movie_18347500(lineSplit, hasRating);       // Doesn't have a rating
 
-      outputList.add(tempMovieObj);                                                 // Add object to list
+      outputArray[arrayCounter] = tempMovieObj;                                                // Assign object to array
+      arrayCounter ++;                                                              // update counter for next index
+    }
+
+    // FILL IN THE REST OF LIBRARY WITH BLANK MOVIES
+    for (int blankMovieIndex = arrayCounter; blankMovieIndex < LIB_SIZE; blankMovieIndex++) {
+      outputArray[blankMovieIndex] = new Movie_18347500();
     }
 
     fileScanner.close();
-    return outputList;
+    return outputArray;
 
   }
 
   // Fills playlist List with contents of playlist.txt. Unique method because Movie and Playlist are different classes
-  static List<Playlist_18347500> initialisePlaylistList() {
-    List<Playlist_18347500> outputList = new ArrayList<Playlist_18347500>();        // OUTPUT list created
-    File userInputFile = createFileInst("playlists.txt", false);                    // File created. Dp not persist in finding pre-existing file
+  static Playlist_18347500[] initialisePlaylistList() {
+    Playlist_18347500[] outputArray = new Playlist_18347500[LIB_SIZE];        // OUTPUT list created
+    int arrayCounter = 0;
 
+
+    File userInputFile = createFileInst("playlists.txt", false);                    // File created. Dp not persist in finding pre-existing file
     Scanner fileScanner = new Scanner(System.in);                                   // Creating keyboard input first allows try catch for FNF and also 'may not be initialised issue'
+    // CANT THROW IOException OUTSIDE OF METHOD, DEFINING FILESCANNER AS SYS.IN THEN AS INPUT AVOIDED NON DECLARED IOException
+    // NEXT TRY CATCH WILL NOT FAIL. createFileInst(file, true) above validates file name
     try {
       fileScanner = new Scanner(userInputFile);                                     // Creates a scanner instance based off file instance
     } catch (Exception e) {
@@ -643,7 +674,7 @@ public class LibraryManager_18347500 {
       int playlistID = Integer.parseInt(lineSplit[0]);                                          // Playlist ID
       String playlistName = lineSplit[1];                                                       // Playlist Name
       int playlistLength = Integer.parseInt(lineSplit[2]);                                      // How many movies
-      List<Integer> moviesInPlaylist = getPlaylistMovIDs(lineSplit, playlistLength);            // Takes all movie int in a sublist
+      int[] moviesInPlaylist = getPlaylistMovIDs(lineSplit, playlistLength);            // Takes all movie int in a sublist
       float totalDuration = sumMovieDurations(moviesInPlaylist);                  // Created after moviesInPlaylist for obvious reason
 
       Playlist_18347500 tempPlaylistObj = new Playlist_18347500(
@@ -654,20 +685,28 @@ public class LibraryManager_18347500 {
         moviesInPlaylist                                           // int[] movies in playlist
       );
 
-      outputList.add(tempPlaylistObj);
+      outputArray[arrayCounter] = tempPlaylistObj;
+      arrayCounter ++;
 
     }
 
-    return outputList;
+    // FILL IN THE REST OF LIBRARY WITH BLANK MOVIES
+    for (int blankPlaylistIndex = arrayCounter; blankPlaylistIndex < LIB_SIZE; blankPlaylistIndex++) {
+      outputArray[blankPlaylistIndex] = new Playlist_18347500();
+    }
+
+    return outputArray;
   }
 
   // Searches through movies to add up their durations
-  static float sumMovieDurations(List<Integer> moviesInPlaylist) {
+  static float sumMovieDurations(int[] moviesInPlaylist) {
     float totalDuration = 0;                        // Running count of movie durations
     for (int playlistMov : moviesInPlaylist) {
       for (Movie_18347500 mov : movieLibrary) {
-        if (playlistMov == mov.getMovieID()) {      // Comparing playlistMovieID with IDs form Library
-          totalDuration += mov.getMovieDuration();
+        if (mov.getMovieID() >= 0) {                  // Movies with -1 ID are unassigned
+          if (playlistMov == mov.getMovieID()) {      // Comparing playlistMovieID with IDs form Library
+            totalDuration += mov.getMovieDuration();
+          }
         }
       }
     }
@@ -675,13 +714,18 @@ public class LibraryManager_18347500 {
   }
 
   // getsPlaylistsMovieIDs from file input after making them ints in a List
-  static List<Integer> getPlaylistMovIDs (String[] inStringArray, int playlistLength) {
-    List<Integer> outIntList = new ArrayList<Integer>();
+  static int[] getPlaylistMovIDs (String[] inStringArray, int playlistLength) {
+    int[] outIntArray = new int[100];
+    for (int a = 0; a < 100; a++) {             // Assigns all movies ID of -1 so if unused, not seen 'as a movie'
+      outIntArray[a] = -1;
+    }
+    int outInArrayCounter = 0;
     int maxMovieIndex = 3 + playlistLength;
     for (int i = 3; i < maxMovieIndex; i++) {
-      outIntList.add(Integer.parseInt(inStringArray[i]));
+      outIntArray[outInArrayCounter] = Integer.parseInt(inStringArray[i]);      // Parse and not cast >> error: incompatible types: String cannot be converted to int
+      outInArrayCounter ++;
     }
-    return outIntList;
+    return outIntArray;
   }
 
   // Returns movie index in library if search matches name. returns -1 if no match
@@ -690,8 +734,8 @@ public class LibraryManager_18347500 {
     //DONE: [70] Plan out Searching method
     // Objects.equals(A,B); will give value equality boolean
     int outputIndex = -1;
-    for (int i = 0; i < movieLibrary.size()-1; i++) {
-      if (Objects.equals(searchKey, movieLibrary.get(i).getMovieName())) {
+    for (int i = 0; i < numMovieObjects(); i++) {
+      if (Objects.equals(searchKey, movieLibrary[i].getMovieName())) {
         return i;
       }
     }
@@ -703,14 +747,34 @@ public class LibraryManager_18347500 {
   // Returns playlist index in list if search matches name. returns -1 if no matche
   static int searchForPlaylistIndex(String searchKey) {
     int outputIndex = -1;
-    for (int i = 0; i < playlists.size(); i++) {
-      if (Objects.equals(searchKey, playlists.get(i).getPlaylistName())) {
+    for (int i = 0; i < numPlaylistObjects(); i++) {
+      if (Objects.equals(searchKey, playlists[i].getPlaylistName())) {
         return i;
       }
     }
 
     System.out.println("No playlists with the name " + searchKey + " were found. Please change your search term.");
     return outputIndex;
+  }
+
+  static int numMovieObjects() {
+    int movieCounter = 0;
+    for (Movie_18347500 movie : movieLibrary) {
+      if (movie.getMovieID() != -1) {
+        movieCounter ++;
+      }
+    }
+    return movieCounter;
+  }
+
+  static int numPlaylistObjects() {
+    int playlistCounter = 0;
+    for (Playlist_18347500 playlist : playlists) {
+      if (playlist.getPlaylistID() != -1) {
+        playlistCounter ++;
+      }
+    }
+    return playlistCounter;
   }
 
 }
