@@ -31,6 +31,10 @@ public class Playlist_18347500 {
 
   public Playlist_18347500 () {
     playlistID = -1;
+    movies = new int[100];
+    for (int a = 0; a < 100; a++) {
+      movies[a] = -1;
+    }
   }
 
   public Playlist_18347500 (int idNum, String playlistName) {
@@ -40,7 +44,9 @@ public class Playlist_18347500 {
     length = 0;
     duration = 0;
     movies = new int[100];
-
+    for (int a = 0; a < 100; a++) {
+      movies[a] = -1;
+    }
   }
 
   // DONE: [11] Playlist Getters
@@ -76,9 +82,10 @@ public class Playlist_18347500 {
   // ## MUTATORS ##
 
   // Playlist ID Setter
-  public void addToPlaylist(int movieIndex, int nextFreeIndex) {
-    this.movies[nextFreeIndex] = movieIndex;     // Add Movie
-    this.length++;                               // Update Length
+  public void addToPlaylist(int movieIndex) {
+    int nextFreeIndex = this.getPlaylistLength();  // Length will account for index off by one error
+    this.movies[nextFreeIndex] = movieIndex;       // Add Movie
+    this.length++;                                 // Update Length
   }
 
   // Playlist Duration Setter
