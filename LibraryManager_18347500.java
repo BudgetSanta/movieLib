@@ -35,10 +35,14 @@ public class LibraryManager_18347500 {
   public static final int LIB_SIZE = 150;
   public static final int EXPAND_SIZE = 10;
 
+  // File Names
+  public static String movieFileName = "movieLibrary.txt";
+  public static String playlistFileName = "playlists.txt";
+
   // Global Keyboard Instance
   public static Scanner kb = new Scanner(System.in);
-  public static Movie_18347500[] movieLibrary = initialiseMovieList();                    // Initialises Movie Library to List
-  public static Playlist_18347500[] playlists = initialisePlaylistList();                 // Initialises Playlists to List
+  public static Movie_18347500[] movieLibrary = initialiseMovieList(movieFileName);                    // Initialises Movie Library to List
+  public static Playlist_18347500[] playlists = initialisePlaylistList(playlistFileName);              // Initialises Playlists to List
 
   public static void main(String[] args) throws IOException{
 
@@ -49,7 +53,7 @@ public class LibraryManager_18347500 {
     System.out.println("\n ---- IMPORTED PROGRAM FILES ---- ");
 
 
-    //DONE: [42] Get ArrayList for Playlists working because playlists.txt doesn't have to exist
+    //DONE: [42] Get Array for Playlists working because playlists.txt doesn't have to exist
 
     rootMenu(movieLibrary, playlists);
 
@@ -453,9 +457,13 @@ public class LibraryManager_18347500 {
   }
 
   // SHORT DESC
-  static void saveMenu() {
-    System.out.println("IN SAVE MENU");
+  static void saveMenu() throws IOException{
+    System.out.println("\n\tSAVING MOVIES");
+    saveMovies(movieFileName);
+    System.out.println("\n\tSAVING PLAYLISTS");
+    savePlaylists(playlistFileName);
     // OVERWRITE FLIES WITH DATA IN MEMORY
+
   }
 
   // Combined prompt and String input return
@@ -518,7 +526,6 @@ public class LibraryManager_18347500 {
 
   // displayAllPlaylists takes the playlist list and displays it
   static void displayAllPlaylists(Playlist_18347500[] inputList) {
-
     for (Playlist_18347500 playlist : inputList) {
       if (playlist.getPlaylistID() > 0) {
         System.out.println("\n" + playlist.getPlaylistID() + ". " + playlist.getPlaylistName() + " ["+ playlist.getPlaylistLength() + " movies] {Total Runtime: " + playlist.getPlaylistDuration() + " hours}");
@@ -526,9 +533,9 @@ public class LibraryManager_18347500 {
           for (int playlistMovieID : playlist.getPlaylistMovies()) {          // Loops though playlistMovie IDs
             if (playlistMovieID > 0) {
               for (Movie_18347500 libMovie : movieLibrary) {                    // Loops through movieLibrary movies
-                  if (playlistMovieID == libMovie.getMovieID()) {               // checks playlistMovieID against movieLibraryID
-                    System.out.println("\t" + libMovie.getMovieName());         // prints out movie name
-                  }
+                if (playlistMovieID == libMovie.getMovieID()) {               // checks playlistMovieID against movieLibraryID
+                  System.out.println("\t" + libMovie.getMovieID() + ". " + libMovie.getMovieName());         // prints out movie name
+                }
               }
             }
           }
@@ -561,7 +568,8 @@ public class LibraryManager_18347500 {
   // ROOT MENU OPTIONS PRINT OUT
   static void printRootMenuOptions() {
     System.out.println("");
-    System.out.println("## MAIN MENU ##");
+    System.out.println("-- MAIN MENU --");
+    System.out.println("---------------");
     System.out.println("- 1. Movies");
     System.out.println("- 2. Playlists");
     System.out.println("- 3. Save");
@@ -571,7 +579,8 @@ public class LibraryManager_18347500 {
   // MOVIES MENU OPTIONS PRINT OUT
   static void printMoviesMenuOptions() {
     System.out.println("");
-    System.out.println("## MOVIES MENU ##");
+    System.out.println("-- MOVIES MENU --");
+    System.out.println("-----------------");
     System.out.println("- 1. Display Movies");
     System.out.println("- 2. Sort Movies");
     System.out.println("- 3. Change Movie Rating");
@@ -583,7 +592,8 @@ public class LibraryManager_18347500 {
   // PLAYLISTS MENU OPTIONS PRINT OUT
   static void printPlaylistsMenuOptions() {
     System.out.println("");
-    System.out.println("## PLAYLISTS MENU ##");
+    System.out.println("-- PLAYLISTS MENU --");
+    System.out.println("--------------------");
     System.out.println("- 1. Display Playlists");
     System.out.println("- 2. Create a Playlist");
     System.out.println("- 3. Add Movie to a Playlist");
@@ -593,7 +603,8 @@ public class LibraryManager_18347500 {
   // SORT MENU OPTIONS PRINT OUT
   static void printSortMenuOptions() {
     System.out.println("");
-    System.out.println("## SORT MENU ##");
+    System.out.println("-- SORT MENU --");
+    System.out.println("---------------");
     System.out.println("- 1. Sort Movies by Title");
     System.out.println("- 2. Sort Movies by Genre");
     System.out.println("- 3. Go Back");
@@ -629,7 +640,7 @@ public class LibraryManager_18347500 {
         System.out.print("Enter file location: ./");
         inFile = new File(kb.next());
       }
-      System.out.println(fileName + " successfully found and imported !");
+      System.out.println(" >> " + fileName + " successfully found and imported !");
     }
     else {
       if (!inFile.exists()) {                   // FILENAME SEARCH NO-PERSIST. CREATE BLANK FILE FOR USE
@@ -637,7 +648,7 @@ public class LibraryManager_18347500 {
         System.out.println("Blank file created. If you have a pre-existing Playlists file please restart the program after renaming it 'playlists.txt'.");
       }
       else {                                    // FILE FOUND ON FIRST TRY WITH NO PERSISTANCE. WELL DONE
-        System.out.println(fileName + " successfully found and imported !");
+        System.out.println(" >> " + fileName + " successfully found and imported !");
       }
     }
 
@@ -645,11 +656,11 @@ public class LibraryManager_18347500 {
   }
 
   // Method created to output a list of lines from movieLibrary.txt. Unique method because Movie and Playlist are different classes
-  static Movie_18347500[] initialiseMovieList() {
+  static Movie_18347500[] initialiseMovieList(String fileName) {
     Movie_18347500[] outputArray = new Movie_18347500[LIB_SIZE];
     int arrayCounter = 0;
 
-    File userInputFile = createFileInst("movieLibrary.txt", true);                // Create File Instance based off user input
+    File userInputFile = createFileInst(fileName, true);                          // Create File Instance based off user input
     Scanner fileScanner = new Scanner(System.in);                                 // Creating keyboard input first allows try catch for FNF and also 'may not be initialised issue'
     // CANT THROW IOException OUTSIDE OF METHOD, DEFINING FILESCANNER AS SYS.IN THEN AS INPUT AVOIDED NON DECLARED IOException
     // NEXT TRY CATCH WILL NOT FAIL. createFileInst(file, true) above validates file name
@@ -679,18 +690,19 @@ public class LibraryManager_18347500 {
       outputArray[blankMovieIndex] = new Movie_18347500();
     }
 
+    movieFileName = userInputFile.getName();
     fileScanner.close();
     return outputArray;
 
   }
 
   // Fills playlist List with contents of playlist.txt. Unique method because Movie and Playlist are different classes
-  static Playlist_18347500[] initialisePlaylistList() {
+  static Playlist_18347500[] initialisePlaylistList(String fileName) {
     Playlist_18347500[] outputArray = new Playlist_18347500[LIB_SIZE];        // OUTPUT list created
     int arrayCounter = 0;
 
 
-    File userInputFile = createFileInst("playlists.txt", false);                    // File created. Dp not persist in finding pre-existing file
+    File userInputFile = createFileInst(fileName, false);                    // File created. Dp not persist in finding pre-existing file
     Scanner fileScanner = new Scanner(System.in);                                   // Creating keyboard input first allows try catch for FNF and also 'may not be initialised issue'
     // CANT THROW IOException OUTSIDE OF METHOD, DEFINING FILESCANNER AS SYS.IN THEN AS INPUT AVOIDED NON DECLARED IOException
     // NEXT TRY CATCH WILL NOT FAIL. createFileInst(file, true) above validates file name
@@ -729,7 +741,76 @@ public class LibraryManager_18347500 {
       outputArray[blankPlaylistIndex] = new Playlist_18347500();
     }
 
+    playlistFileName = userInputFile.getName();
+    fileScanner.close();
     return outputArray;
+  }
+
+  // Save all Movie Data back to it's file
+  static void saveMovies(String fileName) throws IOException{
+
+    PrintWriter outMovies = new PrintWriter(fileName);
+    int count = 0;
+
+    for (Movie_18347500 movie : movieLibrary) {
+      if (movie.getMovieID() != -1) {                               // Selects all Valid Movies for saving
+
+        String movieRating;
+        if (movie.getMovieRating() == -1) {                           // Undefined ratings are made blank
+          movieRating = "";
+        }
+        else if (movie.getMovieRating() % 1 == 0) {                   // X.0 ratings are shortened to X
+          movieRating = String.valueOf((int)movie.getMovieRating());
+        }
+        else {                                                        // X.5 ratings are left as is
+          movieRating = String.valueOf(movie.getMovieRating());
+        }
+
+        String movieLine = movie.getMovieID() + "," +
+                           movie.getMovieName() + "," +
+                           movie.getMovieDirector() + "," +
+                           movie.getMovieWriter() + "," +
+                           movie.getMovieDuration() + "," +
+                           movie.getMovieGenre() + "," +
+                           movie.getMovieClassification() + "," +
+                           movie.getMovieRelease() + "," +
+                           movieRating;
+        outMovies.println(movieLine);
+        count++;
+      }
+    }
+    outMovies.close();
+    System.out.println("Successfully saved " + count + " movies to " + fileName);
+  }
+
+  // Saves all Playlist data back to it's file
+  static void savePlaylists(String fileName) throws IOException{
+
+    PrintWriter outPlaylists = new PrintWriter(fileName);
+    int count = 0;
+
+    for (Playlist_18347500 playlist : playlists) {
+      if (playlist.getPlaylistID() != -1) {
+
+        String playlistMovIDs = "";                         // CONCATENATING MOV IDs
+        for (int movID : playlist.getPlaylistMovies()) {
+          if (movID != -1) {
+            playlistMovIDs += "," + movID;
+          }
+        }
+        String playlistLine = playlist.getPlaylistID() + "," +
+                              playlist.getPlaylistName() + "," +
+                              playlist.getPlaylistLength() +
+                              playlistMovIDs;
+        outPlaylists.println(playlistLine);
+        count++;
+      }
+    }
+    outPlaylists.close();
+    if (count == 0) {
+      System.out.println("Action successfull but there were no playlists to save.");
+    }
+    System.out.println("Successfully saved " + count + " playlists to " + fileName);
   }
 
   // Searches through movies to add up their durations
@@ -790,7 +871,6 @@ public class LibraryManager_18347500 {
     System.out.println("No playlists with the name " + searchKey + " were found. Please change your search term.");
     return outputIndex;
   }
-
 
   // move to classes and use as .size()
   static int numMovieObjects() {

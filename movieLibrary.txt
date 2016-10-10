@@ -1,24 +1,24 @@
 1,The Matrix,The Wachowski Brothers,The Wachowski Brothers,2.25,Sci-Fi,MA 15+,31 March 1999,4.5
-2,Mr Poppers Penguins,Mark Waters,Sean Anders,1.5,Comedy,PG,17 June 2011
+2,Mr Poppers Penguins,Mark Waters,Sean Anders,1.5,Comedy,PG,17 June 2011,
 3,Harry Potter and the Philosophers Stone,Chris Columbus,Steve Kloves,2.5,Adventure,PG,16 November 2001,3
 4,The Jungle Book,Jon Favreau,Justin Marks,1.75,Family,PG,15 April 2016,4
 5,The Shawshank Redemption,Frank Darabont,Frank Darabont,2.3,Crime,MA 15+,14 October 1994,5
 6,Goodfellas,Martin Scorsese,Nicholas Pileggi,2.5,Crime,R,21 September 1990,4.5
 7,Suicide Squad,David Ayer,David Ayer,2.0,Action,PG-13,5 Augest 2016,3
-8,The Matrix Reloaded,The Wachowski Brothers,The Wachowski Brothers,2.25,Sci-Fi,MA 15+,15 May 2003
+8,The Matrix Reloaded,The Wachowski Brothers,The Wachowski Brothers,2.25,Sci-Fi,MA 15+,15 May 2003,
 9,The Dark Knight,Christopher Nolan,Jonathan Nolan,2.5,Action,PG-13,18 July 2008,4.5
 10,Forrest Gump,Robert Zemeckis,Eric Roth,2.3,Drama,PG-13,6 July 1994,4.5
-11,Harry Potter and the Chamber of Secrets,Chris Columbus,Steve Kloves,2.75,Adventure,PG,15 November 2002
+11,Harry Potter and the Chamber of Secrets,Chris Columbus,Steve Kloves,2.75,Adventure,PG,15 November 2002,
 12,The Matrix Revolutions,The Wachowski Brothers,The Wachowski Brothers,2.25,Sci-Fi,MA 15+,5 November 2003,3.5
 13,The Godfather,Francis Ford Coppola,Mario Puzo,3.0,Crime,MA 15+,24 March 1972,5
 14,Harry Potter and the Goblet of Fire,Mike Newell,Steve Kloves,2.5,Adventure,PG,18 November 2005,3.5
-15,Fight Club,David Fincher,Jim Uhls,2.3,Drama,R,15 October 1999,4.5
+15,Fight Club,David Fincher,Jim Uhls,2.3,Action,R,15 October 1999,4.5
 16,Se7en,David Fincher,Andrew Kevin Walker,2.0,Crime,R,22 September 1995,4.5
 17,The Departed,Martin Scorese,William Monahan,2.5,Crime,R,6 October 2006,4.5
 18,Million Dollar Baby,Clint Eastwood,Paul Haggis,2.25,Drama,PG-13,28 January 2004,4.5
 19,A Beautiful Mind,Ron Howard,Akiva Goldsman,2.25,Drama,PG-13,4 January 2002,4
 20,Harry Potter and the Prisoner of Azkaban,Alfonso Cuaron,Steve Kloves,2.3,Adventure,PG,4 June 2004,4
-21,Chicago,Rob Marshal,Bill Condon,2.0,Crime,PG-13,24 January 2003
+21,Chicago,Rob Marshal,Bill Condon,2.0,Crime,PG-13,24 January 2003,
 22,Gladiator,Ridley Scott,David Franzoni,2.5,Action,MA 15+,5 May 2000,4.5
 23,The Return of the King,Peter Jackson,Fran Walsh,3.4,Action,PG-13,17 December 2003,4.5
 24,Titanic,James Cameron,James Cameron,3.25,Drama,PG-13,19 December 1997,4
@@ -27,14 +27,14 @@
 27,Blazing Saddles,Mel Brooks,Mel Brooks,1.5,Comedy,M,7 February 1974,4
 28,Trainwreck,Judd Apatow,Amy Schumer,2.0,Comedy,M,17 July 2015,3
 29,Focus,Glenn Ficarra,Glenn Ficarra,1.75,Comedy,M,27 February 2015,3
-30,10 Things I Hate About You,Gil Junger,Karen McCullah,1.5,Comedy,PG-13,31 March 1999
+30,10 Things I Hate About You,Gil Junger,Karen McCullah,1.5,Comedy,PG-13,31 March 1999,
 31,Terminator 2,James Cameron,James Cameron,2.25,Sci-Fi,MA 15+,3 July 1991,4.5
 32,Star Wars: The Force Awakens,J.J. Abrams,Lawrence Kasdan,2.25,Sci-Fi,MA 15+,18 December 2015,4
 33,Interstellar,Christopher Nolan,Jonathan Nolan,2.75,Sci-Fi,M,7 November 2014,4
 34,The Martian,Ridley Scott,Drew Goddard,2.5,Sci-Fi,M,2 October 2015,4
 35,Mad Max: Fury Road,George Miller,George Miller,2.0,Sci-Fi,MA 15+,15 May 2015,4
 36,Back to the Future,Robert Zemeckis,Robert Zemeckis,2.0,Adventure,PG,3 July 1985,4.5
-37,In the Heart of the Sea,Ron Howard,Charles Leavitt,2.0,Adventure,M,11 December 2015
+37,In the Heart of the Sea,Ron Howard,Charles Leavitt,2.0,Adventure,M,11 December 2015,
 38,Brooklyn,John Crowley,Nick Hornby,1.8,Romance,M,25 November 2015,3.5
 39,Batman Begins,Christopher Nolan,David Goyer,2.3,Action,M,15 June 2005,4
 40,Iron Man,Jon Favreau,Mark Fergus,2.1,Action,M,2 May 2008,3

@@ -4,4 +4,4 @@
 4,Sci-Fi,8,1,8,12,31,32,33,34,35
 5,Favourites,2,5,13
 6,Kids,0
-7,Friday Night,0
+7,Friday Night,2,15,15
