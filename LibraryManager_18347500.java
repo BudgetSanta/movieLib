@@ -48,24 +48,18 @@ public class LibraryManager_18347500 {
 
     System.out.println("\n ---- IMPORTED PROGRAM FILES ---- ");
 
-    /**
-     * This method starts the menu selection and in turn allows
-     * all other functionality.
-     *
-     * @param   movieLibrary an array of Movie_18347500 objects which is the entire library
-     * @param   playlists    an array of Playlist_18347500 objects which are the playlists of movies
-     */
     rootMenu(movieLibrary, playlists);
 
     kb.close();
   }
 
 
-  /** 
+  /**
    * Creates a file object based of given filename
    *
    * @param  fileName    name of the file on the computer e.g. myFile.txt
    * @param  doValidate  whether to persist for file name if doesn't exist (playlists.txt doesn't have to exist)
+   * @return             File instance pointing towards fileName
    */
   static File createFileInst(String fileName, Boolean doValidate) {
     //DONE: [41] Create File Method
@@ -92,7 +86,12 @@ public class LibraryManager_18347500 {
     return inFile;
   }
 
-  // Method created to output a list of lines from movieLibrary.txt. Unique method because Movie and Playlist are different classes
+  /**
+   * Populates an array with movie information for movieLibrary to adopt
+   *
+   * @param fileName  name of the file on the computer to read from e.g. myFile.txt
+   * @return          Array of movie objects to become the movie library
+   */
   static Movie_18347500[] initialiseMovieList(String fileName) {
     Movie_18347500[] outputArray = new Movie_18347500[LIB_SIZE];
     int arrayCounter = 0;
@@ -133,7 +132,12 @@ public class LibraryManager_18347500 {
 
   }
 
-  // Fills playlist List with contents of playlist.txt. Unique method because Movie and Playlist are different classes
+  /**
+   * Returns the array populated with playlist information for playlists to adopt
+   *
+   * @param fileName  name of the file on the computer to read from e.g. myFile.txt
+   * @return          Array of playlist objects to become the playlists library
+   */
   static Playlist_18347500[] initialisePlaylistList(String fileName) {
     Playlist_18347500[] outputArray = new Playlist_18347500[LIB_SIZE];        // OUTPUT list created
     int arrayCounter = 0;
@@ -183,7 +187,11 @@ public class LibraryManager_18347500 {
     return outputArray;
   }
 
-  // Save all Movie Data back to it's file
+  /**
+   * Writes data from the movieLibrary array to the fileName given.
+   *
+   * @param fileName  name of the file on the computer to write to e.g. myFile.txt
+   */
   static void saveMovies(String fileName) throws IOException{
 
     PrintWriter outMovies = new PrintWriter(fileName);
@@ -220,7 +228,11 @@ public class LibraryManager_18347500 {
     System.out.println("Successfully saved " + count + " movies to " + fileName);
   }
 
-  // Saves all Playlist data back to it's file
+  /**
+   * Writes data from the playlists array to the fileName given
+   *
+   * @param fileName  name of the file on the comptuer to write to e.g. myFile.txt
+   */
   static void savePlaylists(String fileName) throws IOException{
 
     PrintWriter outPlaylists = new PrintWriter(fileName);
@@ -255,6 +267,11 @@ public class LibraryManager_18347500 {
 // ###################
 
   // Sorts the movie library alphabetically
+  /**
+   * Copies the movieLibrary array and sorts it alphabetically
+   *
+   * @return         Array of sorted movie objects for printing
+   */
   static Movie_18347500[] sortByTitle() {
 
     //DONE: [60] Move in Sort codes
@@ -265,7 +282,12 @@ public class LibraryManager_18347500 {
 
   }
 
-  // Sorts the movie library alphabetically within an alphabetical genre sort
+  /**
+   * Copies the movieLibrary array and sorts it by genre then alphabetically
+   * to have it alphabetical within an alphabetical genre sort
+   *
+   * @return         Array of sorted movie objects for prinring
+   */
   static Movie_18347500[] sortByGenre() {
 
     //DONE: [61] Move in sort code
@@ -275,7 +297,10 @@ public class LibraryManager_18347500 {
     return genreSorted;
   }
 
-  // 'Grows' movieLibrary array by EXPAND_SIZE
+  /**
+   * Assigns movieLibrary array to a copy of itself with more indexes.
+   * It also fills new empty spaces with blank movie objects
+   */
   static void expandMovieArray() {
     int originalSize = numMovieObjects();                             // To reference where to start filling in blank movies later
     movieLibrary = Arrays.copyOf(movieLibrary, originalSize + EXPAND_SIZE);    // Copy movieLibrary to itself but larger
@@ -285,6 +310,10 @@ public class LibraryManager_18347500 {
   }
 
   // 'Grows' playlists array by EXPAND_SIZE
+  /**
+   * Assigns playlists array to a copy of itself with more indexes
+   * It also fills new empty spaces with blank playlsit obejcts
+   */
   static void expandPlaylistArray() {
     int originalSize = numPlaylistObjects();                                   // Where to start filling in blank playlists
     playlists = Arrays.copyOf(playlists, originalSize + EXPAND_SIZE);          // Copy playlists to itself but larger
@@ -293,7 +322,10 @@ public class LibraryManager_18347500 {
     }
   }
 
-  // Add movie to playlist
+  /**
+   * Adds a movie to the next available index in a playlists movie array.
+   * Expands the playlists movie array if needed
+   */
   static void addMovieToPlaylist() {
     // find playlist index
     int playlistIndex;
@@ -319,7 +351,10 @@ public class LibraryManager_18347500 {
     System.out.println("\n\t!! Movie {" + movieLibrary[movieIndex-1].getMovieName() + "} was added to playlist {" + playlists[playlistIndex].getPlaylistName() + "}");        // Strange off by one error
   }
 
-  // Creates a Movie Object then adds to the library
+  /**
+   * Adds a movie to the next available index in movieLibrary array
+   * Expands the movieLibrary array if needed
+   */
   static void addMovieSubMenu() throws IOException  {
     // Create temp variables
     // Create Movie_18347500 object
@@ -363,21 +398,18 @@ public class LibraryManager_18347500 {
   }
 
 
-
-// --------------------------------------------------
-// --------------------------------------------------
-// --------------------------------------------------
-// --------------------------------------------------
-// --------------------------------------------------
-// --------------------------------------------------
-// --------------------------------------------------
-
-//## MENU MENU MENU MENU MENU ##       class: Menu?
+//## MENU MENU MENU MENU MENU ##
 //##############################
 
 // ## MENU FUNCTIONALITY
-  //----------------------
-  // This is the menu that calls all sub menus and repeats with menuLoopFlags
+
+  /**
+   * This method starts the menu selection and in turn allows
+   * all other functionality.
+   *
+   * @param   movieLibrary an array of Movie_18347500 objects which is the entire library
+   * @param   playlists    an array of Playlist_18347500 objects which are the playlists of movies
+   */
   static void rootMenu(Movie_18347500[] movieLibrary, Playlist_18347500[] playlists) throws IOException{
 
     // DONE: [20] Get basic Menu navigation working
@@ -439,7 +471,13 @@ public class LibraryManager_18347500 {
 
   }
 
-  // moviesMenu is a sub menu of ROOT for individual movies
+  /**
+   * Moves the user to the movie specific menu
+   *
+   * @param inMoviesMenu   Boolean to tell rootMenu whether to call movieMenu
+   * @param inSortSubMenu  Boolean to tell movieMenu whether to call sortSubMenu
+   * @return               Boolean tells rootMenu whether to call movieMenu again
+   */
   static Boolean moviesMenu(Boolean inMoviesMenu, Boolean inSortSubMenu) throws IOException{
 
     // Print menu options and take input
@@ -494,7 +532,12 @@ public class LibraryManager_18347500 {
 
   }
 
-  // playlistsMenu is a sub menu of ROOT for playlists of movies
+  /**
+   * Moves the user to the playlist specific menu
+   *
+   * @param inPlaylistsMenu  Boolean to tell rootMenu whether to call playlistsMenu
+   * @return                 Boolean tells rootMenu whether to call playlistsMenu again
+   */
   static Boolean playlistsMenu(Boolean inPlaylistsMenu) throws IOException{
 
     // Print out menu options and takes input
@@ -536,7 +579,12 @@ public class LibraryManager_18347500 {
     return inPlaylistsMenu;
   }
 
-  // sortSubMenu is a sub menu of Movies for sorting movieLibrary
+  /**
+   * Moves the user to the sort specific menu
+   *
+   * @param inSortSubMenu  Boolean to tell moviesMenu whether to call inSortSubMenu
+   * @return               Boolean tells moviesMenu whether to call inSortSubMenu again
+   */
   static Boolean sortSubMenu(Boolean inSortSubMenu) throws IOException{
 
     // print menu options and take input
@@ -572,7 +620,9 @@ public class LibraryManager_18347500 {
     return inSortSubMenu;
   }
 
-  // ratingSubMenu is a sub menu of Movies for changing the rating of a movie
+  /**
+   * Moves the user to the rating specific menu. Changes the rating of a specific movie
+   */
   static void ratingSubMenu() throws IOException{
     //comment
     int movieIndex;
@@ -596,7 +646,9 @@ public class LibraryManager_18347500 {
     //DONE [92] GENRE EDIT - copy and adjust for genre
   }
 
-  // genreSubMenu is a sub menu of Movies for changing the rating of a movie
+  /**
+   * Moves the user to the genre specific menu. Changes the genre of a specific movie
+   */
   static void genreSubMenu() {
     // SEARCH THEN SET GENRE
     int movieIndex;
@@ -616,7 +668,10 @@ public class LibraryManager_18347500 {
     System.out.println("\n\t!! Movie {" + movieLibrary[movieIndex].getMovieName() + "} genre changed to " + movieLibrary[movieIndex].getMovieGenre());
   }
 
-  // Creates a Playlist Object then adds to the library
+  /**
+   * Moves the user to the adding playlist menu.
+   * Creates a playlist and adds it the playlists array
+   */
   static void addPlaylistSubMenu() throws IOException {
     int playlistIDNum = findMaxPlaylistID() + 1;                // Ensures no ID is a duplicate
     String name = getStrIn(" Playlist Name: ");                // Name NO VALIDATION
@@ -633,7 +688,9 @@ public class LibraryManager_18347500 {
     playlists[playlistIDNum - 1] = tempPlaylistObj;             // Array index is ID num off by one
   }
 
-  // SHORT DESC
+  /**
+   * Moves user to save specific menu
+   */
   static void saveMenu() throws IOException{
     System.out.println("\n\tSAVING MOVIES");
     saveMovies(movieFileName);
@@ -645,10 +702,14 @@ public class LibraryManager_18347500 {
 
 
 
-// ## DISPLAY DISPLAY DISPLAY ##        class: toScreen?
-// #############################
+// ## DISPLAY | DISPLAY | DISPLAY ##
+// #################################
 
-  // displayAllMovies takes any sort of movieLibrary and displays it
+  /**
+   * Displays all needed attributes from an input array
+   *
+   * @param inputList  An array of Movie objects that may be sorted or not
+   */
   static void displayAllMovies(Movie_18347500[] inputList) {
     //DONE: [50] Display input array list of Movie objects
     for (Movie_18347500 movie : inputList) {
@@ -663,7 +724,11 @@ public class LibraryManager_18347500 {
     }
   }
 
-  // displayAllPlaylists takes the playlist list and displays it
+  /**
+   * Displays all the information in the playlist Array
+   *
+   * @param inputList  An array of playlist objects
+   */
   static void displayAllPlaylists(Playlist_18347500[] inputList) {
   for (Playlist_18347500 playlist : inputList) {
     if (playlist.getPlaylistID() > 0) {
@@ -684,8 +749,10 @@ public class LibraryManager_18347500 {
 }
 
 // ## PRINTED MENU OPTIONS
-  //-------------------------
-  // ROOT MENU OPTIONS PRINT OUT
+
+  /**
+   * Prints Root menu options
+   */
   static void printRootMenuOptions() {
     System.out.println("");
     System.out.println("-- MAIN MENU --");
@@ -696,7 +763,9 @@ public class LibraryManager_18347500 {
     System.out.println("- 4. Exit");
   }
 
-  // MOVIES MENU OPTIONS PRINT OUT
+  /**
+   * Prints movies menu options
+   */
   static void printMoviesMenuOptions() {
     System.out.println("");
     System.out.println("-- MOVIES MENU --");
@@ -709,7 +778,9 @@ public class LibraryManager_18347500 {
     System.out.println("- 6. Go Back");
   }
 
-  // PLAYLISTS MENU OPTIONS PRINT OUT
+  /**
+   * Prints playlist menu options
+   */
   static void printPlaylistsMenuOptions() {
     System.out.println("");
     System.out.println("-- PLAYLISTS MENU --");
@@ -720,7 +791,9 @@ public class LibraryManager_18347500 {
     System.out.println("- 4. Go Back");
   }
 
-  // SORT MENU OPTIONS PRINT OUT
+  /**
+   * Prints sort menu options
+   */
   static void printSortMenuOptions() {
     System.out.println("");
     System.out.println("-- SORT MENU --");
@@ -730,7 +803,9 @@ public class LibraryManager_18347500 {
     System.out.println("- 3. Go Back");
   }
 
-  // AVAILABLE GENRES PRINT OUT
+  /**
+   * Prints genre menu options
+   */
   static void printGenres() {
     System.out.println("");
     System.out.println("Available Genres:");
@@ -740,6 +815,12 @@ public class LibraryManager_18347500 {
     System.out.println("\t- Sci-fi\t- Thriller");
   }
 
+  /**
+   * Takes the movies rating and returns the appropriate format
+   *
+   * @param rating  The rating help by the movie object
+   * @return        The correctly formatted rating for display
+   */
   static String displayRating(float rating) {
     String tempRating;
     if (rating == (float)(-1)) {
@@ -752,7 +833,7 @@ public class LibraryManager_18347500 {
   }
 
 
-// ## RETRIEVE INFO RETREIVE INFO         class: Data?
+// ## RETRIEVE INFO RETREIVE INFO 
 // ##############################
 
 // ## DATA IN FROM USER
