@@ -833,12 +833,17 @@ public class LibraryManager_18347500 {
   }
 
 
-// ## RETRIEVE INFO RETREIVE INFO 
+// ## RETRIEVE INFO RETREIVE INFO
 // ##############################
 
 // ## DATA IN FROM USER
-  //----------------------
-  // Returns movie index in library if search matches name. returns -1 if no match
+
+  /**
+   * Retrieves the index of the searched movie
+   *
+   * @param searchKey  String of the movie used for searching
+   * @return           Movie index or -1 for not found
+   */
   static int searchForMovieIndex(String searchKey) {
 
     //DONE: [70] Plan out Searching method
@@ -854,7 +859,12 @@ public class LibraryManager_18347500 {
     return outputIndex;
   }
 
-  // Returns playlist index in list if search matches name. returns -1 if no matche
+  /**
+   * Retrieves the index of the searched playlist
+   *
+   * @param searchKey  String of the playlist used for searching
+   * @return           Playlist index or -1 for not found
+   */
   static int searchForPlaylistIndex(String searchKey) {
     int outputIndex = -1;
     for (int i = 0; i < numPlaylistObjects(); i++) {
@@ -867,14 +877,25 @@ public class LibraryManager_18347500 {
     return outputIndex;
   }
 
-  // Combined prompt and String input return
+  /**
+   * Gets a string from the user based on a prompt. No validation on input
+   *
+   * @param prompt  String of message to present user before input
+   * @return        String of user input
+   */
   static String getStrIn(String prompt) {
     System.out.print(prompt);
     String output = kb.nextLine();
     return output;
   }
 
-  // Combined prompt and VALIDATED Int input return
+  /**
+   * Gets an integer from the user based on a prompt. Validation used to
+   * ensure a correct input
+   *
+   * @param prompt  String of message to present user before input
+   * @return        Integer of user input
+   */
   static Integer getIntIn(String prompt) throws IOException{
     //DONE: [30] Get Validated Intger in method
 
@@ -891,7 +912,13 @@ public class LibraryManager_18347500 {
     return Integer.parseInt(outStr);
   }
 
-  // Combined prompt and VALIDATED Float input return
+  /**
+   * Gets an float from the user based on a prompt. Validation used to
+   * ensure a correct input
+   *
+   * @param prompt  String of message to present user before input
+   * @return        Float of user input
+   */
   static Float getFloatIn(String prompt, Boolean isRating) throws IOException {
 
     // Takes string input to validate as float
@@ -910,7 +937,12 @@ public class LibraryManager_18347500 {
     return Float.parseFloat(outStr);
   }
 
-  // All purpose read in next line and split by commas
+  /**
+   * Splits up the information from a read in line
+   *
+   * @param inScanner  Scanner reading from a file
+   * @return           Array of next line with String tokens
+   */
   static String[] readInLineSplit(Scanner inScanner) {
     //DONE: [40] Read in line from any file
     // All input is seperated by a ',' in files
@@ -920,7 +952,11 @@ public class LibraryManager_18347500 {
   }
 
 // ## DATA ABOUT ARRAYS
-  // Counts all valid movie objects (not -1 IDs)
+  /**
+   * Counts the number of movies in the library
+   *
+   * @return        Integer of movie count
+   */
   static int numMovieObjects() {
     int movieCounter = 0;
     for (Movie_18347500 movie : movieLibrary) {
@@ -931,7 +967,11 @@ public class LibraryManager_18347500 {
     return movieCounter;
   }
 
-  // Gets max indexs (counts -1 IDs)
+  /**
+   * Counts the number of movie library array indexes. Includes blank movies
+   *
+   * @return        Integer of movie library indexes (including blank movies)
+   */
   static int numMovieIndexes() {
     int movieCounter = 0;
     for (Movie_18347500 movie : movieLibrary) {
@@ -940,6 +980,11 @@ public class LibraryManager_18347500 {
     return movieCounter;
   }
 
+  /**
+   * Counts the number of playlists in the playlists array.
+   *
+   * @return        Integer of playlists (excluding blank playlists)
+   */
   static int numPlaylistObjects() {
     int playlistCounter = 0;
     for (Playlist_18347500 playlist : playlists) {
@@ -950,6 +995,11 @@ public class LibraryManager_18347500 {
     return playlistCounter;
   }
 
+  /**
+   * Counts the number of playlists array indexes. Includes blank playlists
+   *
+   * @return        Integer of playlists array index (including blank playlists)
+   */
   static int numPlaylistIndexes() {
     int playlistCounter = 0;
     for (Playlist_18347500 playlist : playlists) {
@@ -958,18 +1008,26 @@ public class LibraryManager_18347500 {
     return playlistCounter;
   }
 
-  // Returns the movie's index in movieLibrary list
+  /**
+   * Retrieves the index of a searched movie.
+   *
+   * @return        Integer of movie index
+   */
   static int findMovieIndex() {
     // SEARCH THEN SET RATING
     int movieIndex;
     do {
-      movieIndex = searchForMovieIndex(getStrIn("Please enter a movie title: "));   // Returns movie index if exits
+      movieIndex = searchForMovieIndex(getStrIn("Please enter a movie title: "));   // Returns movie index if exists
     } while (movieIndex == -1);
 
     return movieIndex;
   }
 
-  // Returns the playlist's index in playlists list
+  /**
+   * Retrieves the index of a searched playlist
+   *
+   * @return        Integer of playlist index
+   */
   static int findPlaylistIndex() {
     // SEARCH THEN RETURN index
     int playlistIndex;
@@ -980,7 +1038,11 @@ public class LibraryManager_18347500 {
     return playlistIndex;
   }
 
-  // Loop through to find the biggest movie ID
+  /**
+   * Retrieves the largest movies ID
+   *
+   * @return        Integer of movie ID
+   */
   static int findMaxMovieID() {
     int biggest = -1;
     for (Movie_18347500 movie : movieLibrary) {
@@ -991,7 +1053,11 @@ public class LibraryManager_18347500 {
     return biggest;
   }
 
-  // loop through to find the biggest playlist ID
+  /**
+   * Retrieves the largest playlist ID
+   *
+   * @return        Integer of playlist ID
+   */
   static int findMaxPlaylistID() {
     int biggest = -1;
     for (Playlist_18347500 playlist : playlists) {
@@ -1002,7 +1068,11 @@ public class LibraryManager_18347500 {
     return biggest;
   }
 
-  // Searches through movies to add up their durations
+  /**
+   * Adds all the playlist's movies to find a total duration
+   *
+   * @return        Float of total movies durations
+   */
   static float sumMovieDurations(int[] moviesInPlaylist) {
     float totalDuration = 0;                          // Running count of movie durations
     for (int playlistMov : moviesInPlaylist) {
@@ -1017,7 +1087,11 @@ public class LibraryManager_18347500 {
     return totalDuration;
   }
 
-  // getsPlaylistsMovieIDs from file input after making them ints in a List
+  /**
+   * Extracts the movie IDs from a playlist from the input line
+   *
+   * @return        Integer of playlists (excluding blank playlists)
+   */
   static int[] getPlaylistMovIDs (String[] inStringArray, int playlistLength) {
     int[] outIntArray = new int[LIB_SIZE];
     for (int a = 0; a < LIB_SIZE; a++) {             // Assigns all movies ID of -1 so if unused, not seen 'as a movie'
@@ -1036,7 +1110,14 @@ public class LibraryManager_18347500 {
 // ## CHECKS AND VALIDATION               class: Check?
 // ########################
 
-  // isValidRating used in ratingSubMenu, contains the specifics of rating specifictions
+  /**
+   * Checks if the rating is valid
+   * - 0 <= rating <=5
+   * - Divisable by 0.5 with no remainder
+   * - or -1 for a non rating
+   *
+   * @return        Boolean of valid rating or not
+   */
   static Boolean isValidRating(float rating) {
   if (rating == -1.0) {
     return true;                                                          // Blank rating flag
@@ -1052,6 +1133,11 @@ public class LibraryManager_18347500 {
 }
 
   // isValidGenre used in genreSubMenu, contains the specifics of rating specifictions
+  /**
+   * Checks the genre against a list of set genres
+   *
+   * @return        Boolean of valid genre or not
+   */
   static Boolean isValidGenre(String newGenre) {
   String[] genres = {"Action", "Adventure", "Comedy", "Crime", "Fantasy", "Family", "Romance", "Horror", "Drama", "Sci-fi", "Thriller"};
   for (String validGenre : genres) {
