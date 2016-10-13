@@ -1106,18 +1106,18 @@ public class LibraryManager_18347500 {
    * @return        Boolean of valid rating or not
    */
   static Boolean isValidRating(float rating) {
-  if (rating == -1.0) {
-    return true;                                                          // Blank rating flag
+    if (rating == -1.0) {
+      return true;                                                          // Blank rating flag
+    }
+    if ((0.0 <= rating && rating <= 5.0) && rating % 0.5 == 0) {            // Whole and half numbers can be divided by 0.5 with no remainder
+      return true;                                                          // Only whole and half number can be ratings
+    }
+    else {
+      System.out.println("\n # " + rating + " is not a valid rating.");
+      System.out.println("\tRATING MUST BE\n\t - Between 0 and 5\n\t - A whole or half number\n\t - e.g. 0,1.5 or 4.0\n\t - Blank for a non rating");
+      return false;
+    }
   }
-  if ((0.0 <= rating && rating <= 5.0) && rating % 0.5 == 0) {            // Whole and half numbers can be divided by 0.5 with no remainder
-    return true;                                                          // Only whole and half number can be ratings
-  }
-  else {
-    System.out.println("\n # " + rating + " is not a valid rating.");
-    System.out.println("\tRATING MUST BE\n\t - Between 0 and 5\n\t - A whole or half number\n\t - e.g. 0,1.5 or 4.0\n\t - Blank for a non rating");
-    return false;
-  }
-}
 
   /**
    * Checks the genre against a list of set genres
@@ -1125,13 +1125,13 @@ public class LibraryManager_18347500 {
    * @return        Boolean of valid genre or not
    */
   static Boolean isValidGenre(String newGenre) {
-  String[] genres = {"Action", "Adventure", "Comedy", "Crime", "Fantasy", "Family", "Romance", "Horror", "Drama", "Sci-fi", "Thriller"};
-  for (String validGenre : genres) {
-    if (Objects.equals(newGenre.toLowerCase(), validGenre.toLowerCase())) {
-      return true;
+    String[] genres = {"Action", "Adventure", "Comedy", "Crime", "Fantasy", "Family", "Romance", "Horror", "Drama", "Sci-fi", "Thriller"};
+    for (String validGenre : genres) {
+      if (Objects.equals(newGenre.toLowerCase(), validGenre.toLowerCase())) {
+        return true;
+      }
     }
+    System.out.println(newGenre + " is not a valid genre. Please make another selection.");
+    return false;
   }
-  System.out.println(newGenre + " is not a valid genre. Please make another selection.");
-  return false;
-}
 }
