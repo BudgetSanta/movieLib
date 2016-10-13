@@ -1,3 +1,12 @@
+/**
+ * Student ID: 18347500
+ *       Name: Jared Steiner
+ *     Campus: Parramatta
+ * Tutor Name: Jordan Collier
+ *  Class Day: Tuesday
+ * Class Time: 9am
+ */
+
 /*
 TO DO SYNTAX:
 (Using '0' instead of 'O' so they don't appear in To Do list)

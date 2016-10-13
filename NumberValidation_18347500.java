@@ -1,6 +1,6 @@
 import java.io.*;
 
-public class NumberValidation {
+public class NumberValidation_18347500 {
 
   // Returns boolean of whether strNum can be an Integer
   static Boolean isInt(String strNum) throws IOException {

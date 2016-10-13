@@ -1,3 +1,12 @@
+/**
+ * Student ID: 18347500
+ *       Name: Jared Steiner
+ *     Campus: Parramatta
+ * Tutor Name: Jordan Collier
+ *  Class Day: Tuesday
+ * Class Time: 9am
+ */
+
 /*
 TO DO SYNTAX:
 (Using '0' instead of 'O' so they don't appear in To Do list)
@@ -7,20 +16,6 @@ In Progress Tasks (Currently working on)
   //N0TE: [[OrderNum][SubOrderNum]] Task Details
 Completed Taks
   //D0NE: [[OrderNum][SubOrderNum]] Task Details [Completion Notes]
-*/
-
-/*
- QUESTIONS:
-
-  - Will each movieLibrary.txt movie id be their position in the array + 1?
-  - Blank ratings remain blank or 0?
-  - Supposed to accomodate for growing Array, if list 101 in length,new array?
-
-ANSWERS
- - movieLibrary.txt ID will be indexs off by one
- - Need a NaN rating
- - grow array method
-
 */
 
 import java.io.*;
@@ -276,7 +271,7 @@ public class LibraryManager_18347500 {
 
     //DONE: [60] Move in Sort codes
     // Display movies by title
-    Movie_18347500[] alphaSorted = movieLibrary;               // Creates a List to manipulate
+    Movie_18347500[] alphaSorted = Arrays.copyOf(movieLibrary, numMovieIndexes());               // Creates a List to manipulate
     Arrays.sort(alphaSorted, Movie_18347500.COMPARE_BY_NAME);  // Sorts based on name.
     return alphaSorted;                                        // returns the Movies in order of sort
 
@@ -286,12 +281,12 @@ public class LibraryManager_18347500 {
    * Copies the movieLibrary array and sorts it by genre then alphabetically
    * to have it alphabetical within an alphabetical genre sort
    *
-   * @return         Array of sorted movie objects for prinring
+   * @return         Array of sorted movie objects for printing
    */
   static Movie_18347500[] sortByGenre() {
 
     //DONE: [61] Move in sort code
-    Movie_18347500[] genreSorted = movieLibrary;
+    Movie_18347500[] genreSorted = Arrays.copyOf(movieLibrary, numMovieIndexes());
     Arrays.sort(genreSorted, Movie_18347500.COMPARE_BY_NAME);          // Sort sort by name first
     Arrays.sort(genreSorted, Movie_18347500.COMPARE_BY_GENRE);         // Sorts by genre second so that in a genre movies are alphabetical
     return genreSorted;
@@ -902,10 +897,10 @@ public class LibraryManager_18347500 {
     // Takes string input to validate as Int
     String outStr = "";
     // Keeps asking for input while not a valid Integer
-    while (!NumberValidation.isInt(outStr)) {
+    while (!NumberValidation_18347500.isInt(outStr)) {
       outStr = getStrIn(prompt);
       // Only if the loop is going to repeat again does it show an error
-      if (!NumberValidation.isInt(outStr)) {
+      if (!NumberValidation_18347500.isInt(outStr)) {
         System.out.println("ERROR: Not a valid integer. Please enter another choice.");
       }
     }
@@ -924,13 +919,13 @@ public class LibraryManager_18347500 {
     // Takes string input to validate as float
     String outStr = "";
     // keeps asking for input while not a valid float
-    while (!NumberValidation.isFloat(outStr)) {
+    while (!NumberValidation_18347500.isFloat(outStr)) {
       outStr = getStrIn(prompt);
       if (Objects.equals(outStr, "")) {     // Rating can be a blank value
         return (float)(-1);
       }
       // only if the loop is going to repeat again does it show an error
-      if (!NumberValidation.isFloat(outStr)) {
+      if (!NumberValidation_18347500.isFloat(outStr)) {
         System.out.println("ERROR: Not a valid decimal number. Please enter another choice.");
       }
     }
