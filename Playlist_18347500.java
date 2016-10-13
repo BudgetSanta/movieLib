@@ -1,3 +1,12 @@
+/**
+ * Student ID: 18347500
+ *       Name: Jared Steiner
+ *     Campus: Parramatta
+ * Tutor Name: Jordan Collier
+ *  Class Day: Tuesday
+ * Class Time: 9am
+ */
+
 /*
 TO DO SYNTAX:
 (Using '0' instead of 'O' so they don't appear in To Do list)
@@ -5,11 +14,10 @@ Current Tasks (List of To Do)
   //T0D0: [[OrderNum][SubOrderNum]] Task Details
 In Progress Tasks (Currently working on)
   //N0TE: [[OrderNum][SubOrderNum]] Task Details
-Completed Taks
+Completed Tasks
   //D0NE: [[OrderNum][SubOrderNum]] Task Details [Completion Notes]
 */
-// import java.util.ArrayList;
-// import java.util.List;
+
 import java.util.Arrays;
 
 public class Playlist_18347500 {
